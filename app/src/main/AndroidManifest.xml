@@ -10,9 +10,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark"
-        android:name="android.support.multidex.MultiDexApplication">
+        android:name=".DndApplication">
         <activity
-            android:name=".Activities.CharacterListActivity"
+            android:name=".ui.activities.CharacterListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait">
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.CharacterNavDrawerActivity"
+            android:name=".ui.activities.CharacterNavDrawerActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait"
