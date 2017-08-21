@@ -110,8 +110,8 @@ public class AttributesFragment extends BaseFragment implements AttributesAdapte
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.title_fragment_attributes);
+    public int getTitle() {
+        return R.string.title_fragment_attributes;
     }
 
     @Override

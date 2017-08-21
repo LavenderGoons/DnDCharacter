@@ -41,7 +41,6 @@ public class SavesDialog {
 
     public static interface SavesDialogListener {
         void OnSavesPositive(Abilities abilities);
-        void OnSavesNegative();
     }
 
     public void showDialog() {
@@ -84,11 +83,6 @@ public class SavesDialog {
                 setSaveValues(saveDialogReflexTotalEdit, saveDialogReflexBaseEdit, saveDialogReflexAbilityEdit, saveDialogReflexMagicEdit, saveDialogReflexMiscEdit, saveDialogReflexTempEdit, REFLEX);
                 setSaveValues(saveDialogWillTotalEdit, saveDialogWillBaseEdit, saveDialogWillAbilityEdit, saveDialogWillMagicEdit, saveDialogWillMiscEdit, saveDialogWillTempEdit, WILL);
                 target.OnSavesPositive(abilities);
-            }
-        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                target.OnSavesNegative();
             }
         });
 

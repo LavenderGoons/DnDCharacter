@@ -117,6 +117,7 @@ public class DBAdapter {
 
             SQLiteDatabase database = databaseHelper.getReadableDatabase();
             Cursor cursor = database.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?", new String[]{String.valueOf(id)}, null, null, null, null);
+            cursor.moveToFirst();
             String json = cursor.getString(cursor.getColumnIndex(column));
 
             if (json != null && !Utils.isStringEmpty(json) && !json.equals("[]") && !json.equals("[ ]")) {
@@ -134,6 +135,7 @@ public class DBAdapter {
 
             SQLiteDatabase database = databaseHelper.getReadableDatabase();
             Cursor cursor = database.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?", new String[]{String.valueOf(id)}, null, null, null, null);
+            cursor.moveToFirst();
             String json = cursor.getString(cursor.getColumnIndex(column));
 
             if (json != null && !Utils.isStringEmpty(json)) {

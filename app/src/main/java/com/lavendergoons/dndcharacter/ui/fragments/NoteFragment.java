@@ -87,8 +87,8 @@ public class NoteFragment extends BaseFragment {
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.title_fragment_notes);
+    public int getTitle() {
+        return R.string.title_fragment_notes;
     }
 
     @Override

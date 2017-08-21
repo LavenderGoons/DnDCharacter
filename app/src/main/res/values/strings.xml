@@ -124,6 +124,10 @@
     <string name="label_layout_misc_mod">Misc\nMod</string>
     <string name="label_layout_temp_mod">Temp\nMod</string>
 
+    <string name="label_ac_edit">AC Edit</string>
+    <string name="label_saves_edit">Saves Edit</string>
+    <string name="label_scores_edit">Scores Edit</string>
+
     <!-- Titles -->
     <string name="title_add_character">Add Character</string>
     <string name="title_action_settings">Settings</string>
@@ -151,9 +155,6 @@
     <string name="hint_enter_perform">Enter Perform</string>
     <string name="hint_enter_knowledge">Enter Knowledge</string>
     <string name="hint_properties">Properties</string>
-
-    <!-- Tags -->
-    <string name="tag_add_character_dialog">ADD_CHARACTER_DIALOG</string>
 
     <!-- Actions -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

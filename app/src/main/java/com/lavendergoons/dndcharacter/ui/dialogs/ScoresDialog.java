@@ -43,7 +43,6 @@ public class ScoresDialog {
 
     public static interface ScoresDialogListener {
         void OnScoresPositive(Abilities abilities);
-        void OnScoresNegative();
     }
 
     public void showDialog() {
@@ -100,11 +99,6 @@ public class ScoresDialog {
                 setAbilityValues(wisScoreEdit, wisModEdit, wisScoreTempEdit, wisModTempEdit, Abilities.WIS);
                 setAbilityValues(chaScoreEdit, chaModEdit, chaScoreTempEdit, chaModTempEdit, Abilities.CHA);
                 target.OnScoresPositive(abilities);
-            }
-        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                target.OnScoresNegative();
             }
         });
 

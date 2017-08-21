@@ -61,8 +61,8 @@ public class SpellFragment extends BaseFragment {
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.title_fragment_spells);
+    public int getTitle() {
+        return R.string.title_fragment_spells;
     }
 
     @Override

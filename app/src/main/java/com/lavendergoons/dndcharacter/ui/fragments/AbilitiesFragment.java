@@ -1,7 +1,6 @@
 package com.lavendergoons.dndcharacter.ui.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,50 +13,88 @@ import android.widget.TextView;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.lavendergoons.dndcharacter.BuildConfig;
+import com.lavendergoons.dndcharacter.DndApplication;
 import com.lavendergoons.dndcharacter.ui.dialogs.ACDialog;
 import com.lavendergoons.dndcharacter.ui.dialogs.SavesDialog;
 import com.lavendergoons.dndcharacter.ui.dialogs.ScoresDialog;
 import com.lavendergoons.dndcharacter.models.Abilities;
 import com.lavendergoons.dndcharacter.models.SimpleCharacter;
 import com.lavendergoons.dndcharacter.R;
-import com.lavendergoons.dndcharacter.utils.CharacterManager;
+import com.lavendergoons.dndcharacter.utils.CharacterManager2;
 import com.lavendergoons.dndcharacter.utils.Constants;
+
 
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 import static java.lang.Integer.parseInt;
+import static com.lavendergoons.dndcharacter.utils.Utils.checkInputNotNull;
 
 
 /**
  * Abilities Fragment
  */
-public class AbilitiesFragment extends BaseFragment implements View.OnClickListener, ACDialog.ACDialogListener, SavesDialog.SavesDialogListener, ScoresDialog.ScoresDialogListener {
+public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialogListener, SavesDialog.SavesDialogListener, ScoresDialog.ScoresDialogListener {
 
     public static final String TAG = "ABILITIES_FRAG";
 
-    private CharacterManager characterManager;
+    @Inject
+    CharacterManager2 characterManager;
+
+    // Butterknife view unbinder
+    private Unbinder unbinder;
+
     private SimpleCharacter simpleCharacter;
     private Abilities abilities;
     private long characterId = -1;
 
-    private Button savesEditBtn, acEditBtn, scoresEditBtn;
+    @BindView(R.id.savesEditBtn) Button savesEditBtn;
+    @BindView(R.id.acEditBtn) Button acEditBtn;
+    @BindView(R.id.scoresEditBtn) Button scoresEditBtn;
 
-    // Saves and AC EditTexts
-    private TextView saveFortValue, saveReflexValue, saveWillValue, acGenValue, acTouchValue, acFlatFootValue;
+    @BindView(R.id.saveFortValue) TextView saveFortValue;
+    @BindView(R.id.saveReflexValue) TextView saveReflexValue;
+    @BindView(R.id.saveWillValue) TextView saveWillValue;
+    @BindView(R.id.acGenValue) TextView acGenValue;
+    @BindView(R.id.acTouchValue) TextView acTouchValue;
+    @BindView(R.id.acFlatFootValue) TextView acFlatFootValue;
 
-    // Ability Edits
-    private EditText abilityStrScoreEdit, abilityDexScoreEdit, abilityConScoreEdit, abilityIntScoreEdit,
-            abilityWisScoreEdit, abilityChaScoreEdit, abilityStrModEdit, abilityDexModEdit, abilityConModEdit,
-            abilityIntModEdit, abilityWisModEdit, abilityChaModEdit;
+    @BindView(R.id.abilityStrScoreEdit) EditText abilityStrScoreEdit;
+    @BindView(R.id.abilityDexScoreEdit) EditText abilityDexScoreEdit;
+    @BindView(R.id.abilityConScoreEdit) EditText abilityConScoreEdit;
+    @BindView(R.id.abilityIntScoreEdit) EditText abilityIntScoreEdit;
+    @BindView(R.id.abilityWisScoreEdit) EditText abilityWisScoreEdit;
+    @BindView(R.id.abilityChaScoreEdit) EditText abilityChaScoreEdit;
+    @BindView(R.id.abilityStrModEdit) EditText abilityStrModEdit;
+    @BindView(R.id.abilityDexModEdit) EditText abilityDexModEdit;
+    @BindView(R.id.abilityConModEdit) EditText abilityConModEdit;
+    @BindView(R.id.abilityIntModEdit) EditText abilityIntModEdit;
+    @BindView(R.id.abilityWisModEdit) EditText abilityWisModEdit;
+    @BindView(R.id.abilityChaModEdit) EditText abilityChaModEdit;
 
-    // General EditTexts
-    private EditText abilityHpEdit, abilityNonLethalEdit, abilityBaseAtkEdit, abilitySpellResEdit, abilityInitiativeEdit, abilitySpeedEdit;
+    @BindView(R.id.abilityHpEdit) EditText abilityHpEdit;
+    @BindView(R.id.abilityNonLethalEdit) EditText abilityNonLethalEdit;
+    @BindView(R.id.abilityBaseAtkEdit) EditText abilityBaseAtkEdit;
+    @BindView(R.id.abilitySpellResEdit) EditText abilitySpellResEdit;
+    @BindView(R.id.abilityInitiativeEdit) EditText abilityInitiativeEdit;
+    @BindView(R.id.abilitySpeedEdit) EditText abilitySpeedEdit;
 
-    // Grapple EditTexts
-    private EditText grappleBaseAttackEdit, grappleStrModEdit, grappleSizeModEdit, grappleMiscModEdit, grappleTotalEdit;
+    @BindView(R.id.grappleBaseAttackEdit) EditText grappleBaseAttackEdit;
+    @BindView(R.id.grappleStrModEdit) EditText grappleStrModEdit;
+    @BindView(R.id.grappleSizeModEdit) EditText grappleSizeModEdit;
+    @BindView(R.id.grappleMiscModEdit) EditText grappleMiscModEdit;
+    @BindView(R.id.grappleTotalEdit) EditText grappleTotalEdit;
 
-    // Money EditTexts
-    private EditText platinumEdit, goldEdit, silverEdit, copperEdit;
+    @BindView(R.id.abilityPlatinumEdit) EditText platinumEdit;
+    @BindView(R.id.abilityGoldEdit) EditText goldEdit;
+    @BindView(R.id.abilitySilverEdit) EditText silverEdit;
+    @BindView(R.id.abilityCopperEdit) EditText copperEdit;
 
     public AbilitiesFragment() {
         // Required empty public constructor
@@ -79,15 +116,14 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
             characterId = getArguments().getLong(Constants.CHARACTER_ID);
             simpleCharacter = getArguments().getParcelable(Constants.CHARACTER_KEY);
         }
-
-        characterManager = CharacterManager.getInstance();
-        //abilities = characterManager.getCharacterAbilities();
+        DndApplication.get(this).getAppComponent().inject(this);
+        abilities = characterManager.getAbilities(characterId);
         FirebaseCrash.log("Abilities: "+abilities);
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.title_fragment_abilities);
+    public int getTitle() {
+        return R.string.title_fragment_abilities;
     }
 
     @Override
@@ -100,47 +136,9 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_abilities, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
 
-        // Buttons
-        savesEditBtn = (Button) rootView.findViewById(R.id.savesEditBtn);
-        savesEditBtn.setOnClickListener(this);
-        acEditBtn = (Button) rootView.findViewById(R.id.acEditBtn);
-        acEditBtn.setOnClickListener(this);
-        scoresEditBtn = (Button) rootView.findViewById(R.id.scoresEditBtn);
-        scoresEditBtn.setOnClickListener(this);
 
-        // TextViews
-        saveFortValue = (TextView) rootView.findViewById(R.id.saveFortValue);
-        saveReflexValue = (TextView) rootView.findViewById(R.id.saveReflexValue);
-        saveWillValue = (TextView) rootView.findViewById(R.id.saveWillValue);
-
-        acGenValue = (TextView) rootView.findViewById(R.id.acGenValue);
-        acTouchValue = (TextView) rootView.findViewById(R.id.acTouchValue);
-        acFlatFootValue = (TextView) rootView.findViewById(R.id.acFlatFootValue);
-
-        // General
-        abilityHpEdit = (EditText) rootView.findViewById(R.id.abilityHpEdit);
-        abilityNonLethalEdit = (EditText) rootView.findViewById(R.id.abilityNonLethalEdit);
-        abilityBaseAtkEdit = (EditText) rootView.findViewById(R.id.abilityBaseAtkEdit);
-        abilitySpellResEdit = (EditText) rootView.findViewById(R.id.abilitySpellResEdit);
-        abilityInitiativeEdit = (EditText) rootView.findViewById(R.id.abilityInitiativeEdit);
-        abilitySpeedEdit = (EditText) rootView.findViewById(R.id.abilitySpeedEdit);
-
-        // Grapple
-        grappleBaseAttackEdit = (EditText) rootView.findViewById(R.id.grappleBaseAttackEdit);
-        grappleStrModEdit = (EditText) rootView.findViewById(R.id.grappleStrModEdit);
-        grappleSizeModEdit = (EditText) rootView.findViewById(R.id.grappleSizeModEdit);
-        grappleMiscModEdit = (EditText) rootView.findViewById(R.id.grappleMiscModEdit);
-        grappleTotalEdit = (EditText) rootView.findViewById(R.id.grappleTotalEdit);
-
-        // Money
-        platinumEdit = (EditText) rootView.findViewById(R.id.abilityPlatinumEdit);
-        goldEdit = (EditText) rootView.findViewById(R.id.abilityGoldEdit);
-        silverEdit = (EditText) rootView.findViewById(R.id.abilitySilverEdit);
-        copperEdit = (EditText) rootView.findViewById(R.id.abilityCopperEdit);
-
-        // Ability Score
-        abilityStrScoreEdit = (EditText) rootView.findViewById(R.id.abilityStrScoreEdit);
         abilityStrScoreEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -153,7 +151,7 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
             public void afterTextChanged(Editable editable) {}
         });
 
-        abilityDexScoreEdit = (EditText) rootView.findViewById(R.id.abilityDexScoreEdit);
+
         abilityDexScoreEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -177,7 +175,6 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
             public void afterTextChanged(Editable editable) {}
         });
 
-        abilityConScoreEdit = (EditText) rootView.findViewById(R.id.abilityConScoreEdit);
         abilityConScoreEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -197,7 +194,6 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
             public void afterTextChanged(Editable editable) {}
         });
 
-        abilityIntScoreEdit = (EditText) rootView.findViewById(R.id.abilityIntScoreEdit);
         abilityIntScoreEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -209,7 +205,6 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
             public void afterTextChanged(Editable editable) {}
         });
 
-        abilityWisScoreEdit = (EditText) rootView.findViewById(R.id.abilityWisScoreEdit);
         abilityWisScoreEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -229,7 +224,6 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
             public void afterTextChanged(Editable editable) {}
         });
 
-        abilityChaScoreEdit = (EditText) rootView.findViewById(R.id.abilityChaScoreEdit);
         abilityChaScoreEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -240,13 +234,6 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void afterTextChanged(Editable editable) {}
         });
-
-        abilityStrModEdit = (EditText) rootView.findViewById(R.id.abilityStrModEdit);
-        abilityDexModEdit = (EditText) rootView.findViewById(R.id.abilityDexModEdit);
-        abilityConModEdit = (EditText) rootView.findViewById(R.id.abilityConModEdit);
-        abilityIntModEdit = (EditText) rootView.findViewById(R.id.abilityIntModEdit);
-        abilityWisModEdit = (EditText) rootView.findViewById(R.id.abilityWisModEdit);
-        abilityChaModEdit = (EditText) rootView.findViewById(R.id.abilityChaModEdit);
 
         // Set Grapple TextWatchers
         grappleBaseAttackEdit.addTextChangedListener(new GrappleTextWatcher());
@@ -259,6 +246,13 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //Butterknife view unbinder
+        unbinder.unbind();
+    }
+
+    @OnClick({R.id.savesEditBtn, R.id.acEditBtn, R.id.scoresEditBtn})
     public void onClick(View view) {
         writeAbilities();
         switch (view.getId()) {
@@ -278,10 +272,9 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
+        super.onPause();
         writeAbilities();
-        super.onStop();
-        Log.d(TAG, "onStop");
     }
 
     private void writeAbilities() {
@@ -290,7 +283,7 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
         readScoreModValues();
         readMoneyValues();
         if (abilities != null) {
-            //characterManager.setCharacterAbilities(abilities);
+            characterManager.setAbilities(characterId, abilities);
         } else {
             FirebaseCrash.log(TAG+" Abilities Null writeAbilities");
         }
@@ -312,10 +305,6 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
     }
 
     @Override
-    public void OnACNegative() {
-    }
-
-    @Override
     public void OnSavesPositive(Abilities abilities) {
         if (abilities == null) {
             FirebaseCrash.log("Abilities Null From OnSavesPositive");
@@ -323,10 +312,6 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
             this.abilities = abilities;
         }
         setSaveValues();
-    }
-
-    @Override
-    public void OnSavesNegative() {
     }
 
     @Override
@@ -339,8 +324,6 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
         setScoreModValues();
     }
 
-    @Override
-    public void OnScoresNegative() {}
 
     //**********************************************************
     // Set Values To EditTexts
@@ -532,179 +515,57 @@ public class AbilitiesFragment extends BaseFragment implements View.OnClickListe
     //**********************************************************
 
     private void readAbilityGeneralValues() {
-        int hp = 0, nonLethal = 0, baseAtk = 0, spellRes = 0, init = 0, speed = 0;
-        int fort = 0, reflex = 0, will = 0, ac = 0;
-        try {
-            hp = parseInt(abilityHpEdit.getText().toString());
-            nonLethal = parseInt(abilityNonLethalEdit.getText().toString());
-            baseAtk = parseInt(abilityBaseAtkEdit.getText().toString());
-            spellRes = parseInt(abilitySpellResEdit.getText().toString());
-            init = parseInt(abilityInitiativeEdit.getText().toString());
-            speed = parseInt(abilitySpeedEdit.getText().toString());
+        abilities.setHp(checkInputNotNull(abilityHpEdit));
+        abilities.setNonLethal(checkInputNotNull(abilityNonLethalEdit));
+        abilities.setBaseAtk(checkInputNotNull(abilityBaseAtkEdit));
+        abilities.setSpellRes(checkInputNotNull(abilitySpellResEdit));
+        abilities.setInitiative(checkInputNotNull(abilityInitiativeEdit));
+        abilities.setSpeed(checkInputNotNull(abilitySpeedEdit));
 
-            fort = parseInt(saveFortValue.getText().toString());
-            reflex = parseInt(saveReflexValue.getText().toString());
-            will = parseInt(saveWillValue.getText().toString());
+        abilities.setFort(checkInputNotNull(saveFortValue), Abilities.SAVE_TOTAL);
+        abilities.setReflex(checkInputNotNull(saveReflexValue), Abilities.SAVE_TOTAL);
+        abilities.setWill(checkInputNotNull(saveWillValue), Abilities.SAVE_TOTAL);
 
-            ac = parseInt(acGenValue.getText().toString());
-        }catch (Exception ex) {
-            ex.printStackTrace();
-            FirebaseCrash.log(TAG +ex.toString());
-            FirebaseCrash.log("EditText Values:\n"+
-                    "HP: "+abilityHpEdit.getText().toString()+
-                    " NonLethal: "+abilityNonLethalEdit.getText().toString()+
-                    " BaseAtk: "+abilityBaseAtkEdit.getText().toString()+
-                    " SpellRes: "+abilitySpellResEdit.getText().toString()+
-                    " Initiative: "+abilityInitiativeEdit.getText().toString()+
-                    " Speed: "+abilitySpeedEdit.getText().toString()
-            );
-            FirebaseCrash.log("EditText Values:\n"+
-                    "Fort: "+saveFortValue.getText().toString()+
-                    " Reflex: "+saveReflexValue.getText().toString()+
-                    " Will: "+saveWillValue.getText().toString()+
-                    " AC: "+acGenValue.getText().toString()
-            );
-            if (!BuildConfig.DEBUG) {
-                FirebaseCrash.report(ex);
-            }
-        }
-        try {
-            abilities.setHp(hp);
-            abilities.setNonLethal(nonLethal);
-            abilities.setBaseAtk(baseAtk);
-            abilities.setSpellRes(spellRes);
-            abilities.setInitiative(init);
-            abilities.setSpeed(speed);
-
-            abilities.setFort(fort, Abilities.SAVE_TOTAL);
-            abilities.setReflex(reflex, Abilities.SAVE_TOTAL);
-            abilities.setWill(will, Abilities.SAVE_TOTAL);
-
-            abilities.setAC(ac, Abilities.AC_TOTAL);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            FirebaseCrash.log("readAbilityGeneralValues: "+ex.toString());
-        }
+        abilities.setAC(checkInputNotNull(acGenValue), Abilities.AC_TOTAL);
     }
 
     private void readGrappleValues() {
         int[] array = new int[]{0,0,0,0,0};
-        try {
-            array[Abilities.GRAPPLE_BASE] = parseInt(grappleBaseAttackEdit.getText().toString());
-            array[Abilities.GRAPPLE_STR] = parseInt(grappleStrModEdit.getText().toString());
-            array[Abilities.GRAPPLE_SIZE] = parseInt(grappleSizeModEdit.getText().toString());
-            array[Abilities.GRAPPLE_MISC] = parseInt(grappleMiscModEdit.getText().toString());
-            array[Abilities.GRAPPLE_TOTAL] = parseInt(grappleTotalEdit.getText().toString());
-        }catch (Exception ex) {
-            FirebaseCrash.log("EditText Values:\n"+
-                    " BaseAtk: "+grappleBaseAttackEdit.getText().toString()+
-                    " StrMod: "+grappleStrModEdit.getText().toString()+
-                    " Size: "+grappleSizeModEdit.getText().toString()+
-                    " Misc: "+grappleMiscModEdit.getText().toString()+
-                    " Total: "+grappleTotalEdit.getText().toString()
-            );
-            FirebaseCrash.log("Array: "+ Arrays.toString(array));
-            if (!BuildConfig.DEBUG) {
-                FirebaseCrash.report(ex);
-            }
-            ex.printStackTrace();
-            FirebaseCrash.log(TAG +ex.toString());
-        }
-        try {
-            abilities.setGrappleArray(array);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            FirebaseCrash.log("readGrappleValues: "+ex.toString());
-        }
-
+        array[Abilities.GRAPPLE_BASE] = checkInputNotNull(grappleBaseAttackEdit);
+        array[Abilities.GRAPPLE_STR] = checkInputNotNull(grappleStrModEdit);
+        array[Abilities.GRAPPLE_SIZE] = checkInputNotNull(grappleSizeModEdit);
+        array[Abilities.GRAPPLE_MISC] = checkInputNotNull(grappleMiscModEdit);
+        array[Abilities.GRAPPLE_TOTAL] = checkInputNotNull(grappleTotalEdit);
+        abilities.setGrappleArray(array);
     }
 
     private void readMoneyValues() {
-        int platinum=0, gold=0, silver=0, copper=0;
-        try {
-            platinum = parseInt(platinumEdit.getText().toString());
-            gold = parseInt(goldEdit.getText().toString());
-            silver = parseInt(silverEdit.getText().toString());
-            copper = parseInt(copperEdit.getText().toString());
-        }catch (Exception ex) {
-            ex.printStackTrace();
-            FirebaseCrash.log(TAG +ex.toString());
-            FirebaseCrash.log("Money: "+
-                    platinumEdit.getText().toString()+" \nG"+
-                    goldEdit.getText().toString()+" \nS"+
-                    silverEdit.getText().toString()+" \nC"+
-                    copperEdit.getText().toString());
-            if (!BuildConfig.DEBUG) {
-                FirebaseCrash.report(ex);
-            }
-        }
-        try {
-            abilities.setPlatinum(platinum);
-            abilities.setGold(gold);
-            abilities.setSilver(silver);
-            abilities.setCopper(copper);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            FirebaseCrash.log("readMoneyValues: "+ex.toString());
-        }
+        abilities.setPlatinum(checkInputNotNull(platinumEdit));
+        abilities.setGold(checkInputNotNull(goldEdit));
+        abilities.setSilver(checkInputNotNull(silverEdit));
+        abilities.setCopper(checkInputNotNull(copperEdit));
     }
 
     private void readScoreModValues() {
         int[] scores = new int[]{0,0,0,0,0,0};
         int[] mods = new int[]{0,0,0,0,0,0};
-        //int[] temps = new int[]{0,0,0,0,0,0};
-        try {
-            /*for (int i=0;i<Abilities.SCORES;i++) {
-                if (abilities.getScoreTempArray()[i] != 0) {
-                    scores[i] =
-                }
-            }*/
-            scores[Abilities.STR] = parseInt(abilityStrScoreEdit.getText().toString());
-            scores[Abilities.DEX] = parseInt(abilityDexScoreEdit.getText().toString());
-            scores[Abilities.CON] = parseInt(abilityConScoreEdit.getText().toString());
-            scores[Abilities.INT] = parseInt(abilityIntScoreEdit.getText().toString());
-            scores[Abilities.WIS] = parseInt(abilityWisScoreEdit.getText().toString());
-            scores[Abilities.CHA] = parseInt(abilityChaScoreEdit.getText().toString());
 
-            mods[Abilities.STR] = parseInt(abilityStrModEdit.getText().toString());
-            mods[Abilities.DEX] = parseInt(abilityDexModEdit.getText().toString());
-            mods[Abilities.CON] = parseInt(abilityConModEdit.getText().toString());
-            mods[Abilities.INT] = parseInt(abilityIntModEdit.getText().toString());
-            mods[Abilities.WIS] = parseInt(abilityWisModEdit.getText().toString());
-            mods[Abilities.CHA] = parseInt(abilityChaModEdit.getText().toString());
-        }catch (Exception ex) {
-            ex.printStackTrace();
-            FirebaseCrash.log(TAG +ex.toString());
-            FirebaseCrash.log("Score EditText Values:\n"+
-                    " STR: "+abilityStrScoreEdit.getText().toString()+
-                    " DEX: "+abilityDexScoreEdit.getText().toString()+
-                    " CON: "+abilityConScoreEdit.getText().toString()+
-                    " INT: "+abilityIntScoreEdit.getText().toString()+
-                    " WIS: "+abilityWisScoreEdit.getText().toString()+
-                    " CHA: "+abilityChaScoreEdit.getText().toString()
-            );
-            FirebaseCrash.log("Mod EditText Values:\n"+
-                    " STR: "+abilityStrModEdit.getText().toString()+
-                    " DEX: "+abilityDexModEdit.getText().toString()+
-                    " CON: "+abilityConModEdit.getText().toString()+
-                    " INT: "+abilityIntModEdit.getText().toString()+
-                    " WIS: "+abilityWisModEdit.getText().toString()+
-                    " CHA: "+abilityChaModEdit.getText().toString()
-            );
-            FirebaseCrash.log("Score Array: "+Arrays.toString(scores));
-            FirebaseCrash.log("Mod Array: "+Arrays.toString(mods));
-            if (!BuildConfig.DEBUG) {
-                FirebaseCrash.report(ex);
-            }
-        }
+        scores[Abilities.STR] = checkInputNotNull(abilityStrScoreEdit);
+        scores[Abilities.DEX] = checkInputNotNull(abilityDexScoreEdit);
+        scores[Abilities.CON] = checkInputNotNull(abilityConScoreEdit);
+        scores[Abilities.INT] = checkInputNotNull(abilityIntScoreEdit);
+        scores[Abilities.WIS] = checkInputNotNull(abilityWisScoreEdit);
+        scores[Abilities.CHA] = checkInputNotNull(abilityChaScoreEdit);
 
-        try {
-            abilities.setScoreArray(scores);
-            abilities.setModArray(mods);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            FirebaseCrash.log("readScoreModValues: "+ex.toString());
-        }
+        mods[Abilities.STR] = checkInputNotNull(abilityStrModEdit);
+        mods[Abilities.DEX] = checkInputNotNull(abilityDexModEdit);
+        mods[Abilities.CON] = checkInputNotNull(abilityConModEdit);
+        mods[Abilities.INT] = checkInputNotNull(abilityIntModEdit);
+        mods[Abilities.WIS] = checkInputNotNull(abilityWisModEdit);
+        mods[Abilities.CHA] = checkInputNotNull(abilityChaModEdit);
+
+        abilities.setScoreArray(scores);
+        abilities.setModArray(mods);
     }
 
     private String modValue(CharSequence score) {

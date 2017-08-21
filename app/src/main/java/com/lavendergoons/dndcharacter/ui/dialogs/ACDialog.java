@@ -39,7 +39,6 @@ public class ACDialog  {
 
     public static interface ACDialogListener {
         void OnACPositive(Abilities abilities);
-        void OnACNegative();
     }
 
 
@@ -74,11 +73,6 @@ public class ACDialog  {
             public void onClick(DialogInterface dialogInterface, int i) {
                 readValues();
                 target.OnACPositive(abilities);
-            }
-        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                target.OnACNegative();
             }
         });
         builder.create().show();

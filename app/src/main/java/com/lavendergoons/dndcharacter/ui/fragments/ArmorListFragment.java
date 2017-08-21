@@ -99,8 +99,8 @@ public class ArmorListFragment extends BaseFragment implements
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.title_fragment_armor);
+    public int getTitle() {
+        return R.string.title_fragment_armor;
     }
 
     @Override

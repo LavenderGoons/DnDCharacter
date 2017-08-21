@@ -89,8 +89,8 @@ public class ItemsGeneralFragment extends BaseFragment
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.title_fragment_items);
+    public int getTitle() {
+        return R.string.title_fragment_items;
     }
 
     @Override

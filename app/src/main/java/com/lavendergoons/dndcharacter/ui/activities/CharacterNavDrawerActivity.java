@@ -156,7 +156,7 @@ public class CharacterNavDrawerActivity extends AppCompatActivity
     private String getCurrentFragmentTitle() {
         Fragment frag = getSupportFragmentManager().findFragmentById(R.id.content_character_nav);
         if (frag != null && frag instanceof BaseFragment) {
-            return ((BaseFragment) frag).getTitle();
+            return getString(((BaseFragment) frag).getTitle());
         }
         return getString(R.string.app_name);
     }
@@ -230,7 +230,7 @@ public class CharacterNavDrawerActivity extends AppCompatActivity
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         if (fragment != null && !isCurrentFragment(fragment.getTag())) {
-            mToolbar.setTitle(fragment.getTitle());
+            mToolbar.setTitle(getString(fragment.getTitle()));
             FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
             fragTransaction.replace(R.id.content_character_nav, fragment, fragment.getTag()).commit();
         }

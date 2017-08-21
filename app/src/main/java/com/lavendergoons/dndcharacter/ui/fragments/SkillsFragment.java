@@ -76,8 +76,8 @@ public class SkillsFragment extends BaseFragment implements SkillsAdapter.SkillA
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.title_fragment_skills);
+    public int getTitle() {
+        return R.string.title_fragment_skills;
     }
 
     @Override

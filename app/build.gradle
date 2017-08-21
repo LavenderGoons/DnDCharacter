@@ -39,6 +39,11 @@ android {
             proguardFile rootProject.file("app/proguard-rules.pro")
         }
     }
+
+    compileOptions {
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+    }
 }
 
 repositories {
@@ -62,7 +67,7 @@ dependencies {
 
     // Google libs
     compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.google.guava:guava:22.0'
+    compile 'com.google.guava:guava:22.0-android'
 
     // Firebase
     compile 'com.google.firebase:firebase-crash:10.0.1'

@@ -68,7 +68,7 @@
             android:id="@+id/savesEditBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit"
+            android:text="@string/label_saves_edit"
             android:layout_below="@+id/saveWillLabel"
             android:layout_alignParentStart="true" />
 
@@ -134,7 +134,7 @@
             android:layout_below="@+id/acTouchValue"/>
 
         <Button
-            android:text="@string/edit"
+            android:text="@string/label_ac_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/acEditBtn"
