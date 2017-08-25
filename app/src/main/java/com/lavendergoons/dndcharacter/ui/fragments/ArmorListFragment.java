@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,12 @@ import com.lavendergoons.dndcharacter.utils.Constants;
 import com.lavendergoons.dndcharacter.utils.Utils;
 
 import java.util.ArrayList;
+
+import static android.R.attr.dialogLayout;
+import static android.R.attr.fragment;
+import static com.lavendergoons.dndcharacter.R.id.armorDialogName;
+import static com.lavendergoons.dndcharacter.R.id.armorDialogQuantity;
+import static com.lavendergoons.dndcharacter.R.id.armorDialogWeight;
 
 
 /**
@@ -110,7 +117,15 @@ public class ArmorListFragment extends BaseFragment implements
 
     @Override
     public void onClick(View view) {
-        new ArmorDialog().showDialog();
+        showDialog();
+    }
+
+    private void launchArmorDetail(Armor armor) {
+        LayoutInflater layoutInflater = this.getLayoutInflater(null);
+        Log.d(TAG, "getView(): "+getView().toString());
+        Log.d(TAG, "getView().getParent(): "+getView().getParent().toString());
+        Log.d(TAG, "getView().getRootView(): "+getView().getRootView());
+        //layoutInflater.inflate(R.layout.fragment_armor2, (ViewGroup) getView().getParent());
     }
 
     private int addArmor(Armor armor) {
@@ -136,69 +151,37 @@ public class ArmorListFragment extends BaseFragment implements
         }
     }
 
-    @Override
-    public void ConfirmDialogCancel(Object armor) {}
 
+    private void showDialog() {
 
-    // Simple Dialog for Creating New Armor
-    public class ArmorDialog {
-        public void showDialog() {
-            final ArmorListFragment fragment = ArmorListFragment.this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+        LayoutInflater inflater = this.getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_armor2, null);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getActivity());
-            LinearLayout dialogLayout = new LinearLayout(fragment.getActivity());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        final EditText armorDialogName, armorDialogWeight, armorDialogQuantity;
+        armorDialogName = (EditText) view.findViewById(R.id.armorDialogName);
+        armorDialogWeight = (EditText) view.findViewById(R.id.armorDialogWeight);
+        armorDialogQuantity = (EditText) view.findViewById(R.id.armorDialogQuantity);
 
-            final EditText armorDialogName, armorDialogWeight, armorDialogQuantity;
+        builder.setTitle(this.getString(R.string.title_armor_dialog));
+        builder.setView(dialogLayout).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String name = armorDialogName.getText().toString();
+                int weight = Utils.checkIntNotNull(armorDialogWeight);
+                int quantity = Utils.checkIntNotNull(armorDialogQuantity);
 
-            dialogLayout.setOrientation(LinearLayout.VERTICAL);
-            dialogLayout.setLayoutParams(params);
-            dialogLayout.setPadding(8, 8, 8, 8);
-
-            armorDialogName = new EditText(fragment.getActivity());
-            armorDialogName.setHint(R.string.hint_name);
-            armorDialogName.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-
-            armorDialogWeight = new EditText(fragment.getActivity());
-            armorDialogWeight.setInputType(InputType.TYPE_CLASS_NUMBER);
-            armorDialogWeight.setHint(R.string.gen_weight);
-
-            armorDialogQuantity = new EditText(fragment.getActivity());
-            armorDialogQuantity.setInputType(InputType.TYPE_CLASS_NUMBER);
-            armorDialogQuantity.setHint(R.string.gen_quantity);
-            // Set default quantity to one
-            armorDialogQuantity.setText(fragment.getActivity().getString(R.string.one));
-
-            dialogLayout.addView(armorDialogName, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            dialogLayout.addView(armorDialogWeight, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            dialogLayout.addView(armorDialogQuantity, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            builder.setTitle(fragment.getString(R.string.title_armor_dialog));
-            builder.setView(dialogLayout).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    boolean exceptionCheck = false;
-                    String name = armorDialogName.getText().toString();
-                    int weight = 0;
-                    int quantity = 0;
-                    try {
-                        weight = Integer.parseInt(armorDialogWeight.getText().toString());
-                        quantity = Integer.parseInt(armorDialogQuantity.getText().toString());
-                    }catch (Exception ex) {
-                        ex.printStackTrace();
-                        FirebaseCrash.log(TAG +ex.toString());
-                        exceptionCheck = true;
-                    }
-                    if (!Utils.isStringEmpty(name) && !exceptionCheck) {
-                        Armor armor = new Armor(name, weight, quantity);
-                        int index = fragment.addArmor(armor);
-                        FragmentTransaction fragTransaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
-                        fragTransaction.replace(R.id.content_character_nav, ArmorFragment.newInstance(armor, index), ArmorFragment.TAG).addToBackStack(ArmorFragment.TAG).commit();
-                    } else {
-                        Toast.makeText(fragment.getActivity(), fragment.getString(R.string.warning_enter_required_fields), Toast.LENGTH_LONG).show();
-                    }
+                if (!Utils.isStringEmpty(name)) {
+                    Armor armor = new Armor(name, weight, quantity);
+                    int index = ArmorListFragment.this.addArmor(armor);
+                    ArmorListFragment.this.launchArmorDetail(armor);
+                    FragmentTransaction fragTransaction = ArmorListFragment.this.getActivity().getSupportFragmentManager().beginTransaction();
+                    fragTransaction.replace(R.id.content_character_nav, ArmorFragment.newInstance(armor, index), ArmorFragment.TAG).addToBackStack(ArmorFragment.TAG).commit();
+                } else {
+                    Toast.makeText(ArmorListFragment.this.getActivity(), ArmorListFragment.this.getString(R.string.warning_enter_required_fields), Toast.LENGTH_LONG).show();
                 }
-            }).setNegativeButton(R.string.cancel, null).create().show();
-        }
+            }
+        }).create().show();
     }
+
 }

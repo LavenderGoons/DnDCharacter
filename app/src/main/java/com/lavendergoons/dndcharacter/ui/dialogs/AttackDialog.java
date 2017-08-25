@@ -53,7 +53,6 @@ public class AttackDialog {
 
     public static interface AttackDialogListener {
         void OnAttackDialogPositive(Attack attack);
-        void OnAttackDialogNegative();
     }
 
     public void showDialog() {
@@ -117,11 +116,6 @@ public class AttackDialog {
                 } else {
                     Toast.makeText(activity, activity.getString(R.string.warning_enter_required_fields), Toast.LENGTH_LONG).show();
                 }
-            }
-        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                listener.OnAttackDialogNegative();
             }
         });
 

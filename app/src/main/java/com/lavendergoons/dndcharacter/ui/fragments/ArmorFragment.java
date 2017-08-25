@@ -13,6 +13,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.lavendergoons.dndcharacter.models.Armor;
 import com.lavendergoons.dndcharacter.R;
 import com.lavendergoons.dndcharacter.utils.CharacterManager;
+import com.lavendergoons.dndcharacter.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -70,7 +71,7 @@ public class ArmorFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_armor, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_armor2, container, false);
         armorNameEdit = (EditText) rootView.findViewById(R.id.armorNameEdit);
         armorTypeEdit = (EditText) rootView.findViewById(R.id.armorTypeEdit);
         armorACEdit = (EditText) rootView.findViewById(R.id.armorACEdit);
@@ -85,24 +86,26 @@ public class ArmorFragment extends BaseFragment {
         return rootView;
     }
 
+    // Set the Armor object with new values
     private void setValues() {
         try {
             armor.setName(armorNameEdit.getText().toString());
             armor.setType(armorTypeEdit.getText().toString());
-            armor.setAcBonus(Integer.parseInt(armorACEdit.getText().toString()));
-            armor.setMaxDex(Integer.parseInt(armorDexEdit.getText().toString()));
-            armor.setCheckPenalty(Integer.parseInt(armorCheckEdit.getText().toString()));
-            armor.setSpellFailure(Integer.parseInt(armorSpellEdit.getText().toString()));
-            armor.setWeight(Integer.parseInt(armorSpeedEdit.getText().toString()));
-            armor.setSpeed(Integer.parseInt(armorWeightEdit.getText().toString()));
+            armor.setAcBonus(Utils.checkIntNotNull(armorACEdit));
+            armor.setMaxDex(Utils.checkIntNotNull(armorDexEdit));
+            armor.setCheckPenalty(Utils.checkIntNotNull(armorCheckEdit));
+            armor.setSpellFailure(Utils.checkIntNotNull(armorSpellEdit));
+            armor.setWeight(Utils.checkIntNotNull(armorSpeedEdit));
+            armor.setSpeed(Utils.checkIntNotNull(armorWeightEdit));
             armor.setProperties(armorPropertiesEdit.getText().toString());
-            armor.setQuantity(Integer.parseInt(armorQuantityEdit.getText().toString()));
-        }catch (Exception ex) {
+            armor.setQuantity(Utils.checkIntNotNull(armorQuantityEdit));
+        } catch (Exception ex) {
             ex.printStackTrace();
             FirebaseCrash.log(TAG +ex.toString());
         }
     }
 
+    // Get values from Init Armor Object
     private void getValues() {
         try {
             armorNameEdit.setText(armor.getName());
@@ -115,7 +118,7 @@ public class ArmorFragment extends BaseFragment {
             armorWeightEdit.setText(String.valueOf(armor.getWeight()));
             armorPropertiesEdit.setText(armor.getProperties());
             armorQuantityEdit.setText(String.valueOf(armor.getQuantity()));
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             FirebaseCrash.log(TAG +ex.toString());
         }
@@ -131,16 +134,5 @@ public class ArmorFragment extends BaseFragment {
             FirebaseCrash.log(TAG + " Index out of Bounds. Index: "+index);
         }
         super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 }

@@ -117,21 +117,11 @@ public class FeatsFragment extends BaseFragment implements
     }
 
     @Override
-    public void ConfirmDialogCancel(Object o) {
-
-    }
-
-    @Override
     public void OnFeatPositive(Feat feat) {
         if (feat != null) {
             featList.add(feat);
         }
         mFeatsRecyclerAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void OnFeatNegative(Feat feat) {
-
     }
 
     @Override

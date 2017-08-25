@@ -1,7 +1,6 @@
 package com.lavendergoons.dndcharacter.utils;
 
-import android.text.InputType;
-import android.view.View;
+import android.support.annotation.NonNull;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,7 +16,7 @@ public class Utils {
      * @param string
      * @return boolean
      */
-    public static boolean isStringEmpty(String string) {
+    public static boolean isStringEmpty(@NonNull String string) {
         return (string.isEmpty() || string.trim().isEmpty());
     }
 
@@ -44,15 +43,20 @@ public class Utils {
         return (mod%2==0)?(mod - 10)/2:(mod - 11) / 2;
     }
 
-    public static int checkInputNotNull(TextView view) {
+    /**
+     * Gets the text from a view and parseInt
+     * @param view TextView
+     * @return Value of text in view
+     */
+    public static int checkIntNotNull(TextView view) {
         int value = 0;
         if (view != null) {
             if (!isStringEmpty(view.getText().toString())) {
                 try {
                     value = Integer.parseInt(view.getText().toString());
-                }catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    FirebaseCrash.log("checkInputNotNull view: "+view.toString()
+                    FirebaseCrash.log("checkIntNotNull view: "+view.toString()
                             +" \n view text: "+view.getText().toString()
                             +" exception: "+e.toString());
                     value = 0;
@@ -62,7 +66,12 @@ public class Utils {
         return value;
     }
 
-    public static int checkInputNotNull(EditText view) {
+    /**
+     * Gets the text from a view and parseInt
+     * @param view EditText
+     * @return Value of text in view
+     */
+    public static int checkIntNotNull(EditText view) {
         int value = 0;
         if (view != null) {
             if (!isStringEmpty(view.getText().toString())) {
@@ -70,11 +79,30 @@ public class Utils {
                     value = Integer.parseInt(view.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    FirebaseCrash.log("checkInputNotNull view: "+view.toString()
+                    FirebaseCrash.log("checkIntNotNull view: "+view.toString()
                             +" \n view text: "+view.getText().toString()
                             +" exception: "+e.toString());
                     value = 0;
                 }
+            }
+        }
+        return value;
+    }
+
+    /**
+     * String to int with checks
+     * @param  input
+     * @return int value
+     */
+    public static int stringToInt(String input) {
+        int value = 0;
+        if (!isStringEmpty(input)) {
+            try {
+               value = Integer.parseInt(input);
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+                FirebaseCrash.log("exception: "+ex.toString());
+                value = 0;
             }
         }
         return value;

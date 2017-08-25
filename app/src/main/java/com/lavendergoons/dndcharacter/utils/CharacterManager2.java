@@ -1,6 +1,7 @@
 package com.lavendergoons.dndcharacter.utils;
 
 
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lavendergoons.dndcharacter.data.DBAdapter;
@@ -51,6 +52,11 @@ public class CharacterManager2 {
     public void createCharacter(SimpleCharacter simpleCharacter) {
         String characterJson = gson.toJson(simpleCharacter);
         dbAdapter.insertRow(characterJson);
+    }
+
+    public void setSimpleCharacter(long id, SimpleCharacter simpleCharacter) {
+        writeToDatabase(id, DatabaseHelper.COLUMN_CHARACTER, gson.toJson(simpleCharacter));
+        //Log.d(TAG, simpleCharacter.toString());
     }
 
     public void removeCharacter(SimpleCharacter simpleCharacter) {
@@ -122,6 +128,14 @@ public class CharacterManager2 {
             list = null;
         }
         return character2.getAttributesList();
+    }
+
+    public void setAttributes(long id, ArrayList<String> attributes) {
+        if (attributes != null) {
+            character2.setAttributesList(attributes);
+            String json = gson.toJson(attributes);
+            writeToDatabase(id, DatabaseHelper.COLUMN_ATTRIBUTES, json);
+        }
     }
 
     public ArrayList<Feat> getFeats(long id) {

@@ -44,7 +44,6 @@ public class FeatDialog {
 
     public interface FeatDialogListener {
         void OnFeatPositive(Feat feat);
-        void OnFeatNegative(Feat feat);
     }
 
     public void showDialog(final Feat feat) {

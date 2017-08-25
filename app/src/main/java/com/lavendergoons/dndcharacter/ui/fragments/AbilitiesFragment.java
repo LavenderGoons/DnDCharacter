@@ -23,7 +23,6 @@ import com.lavendergoons.dndcharacter.R;
 import com.lavendergoons.dndcharacter.utils.CharacterManager2;
 import com.lavendergoons.dndcharacter.utils.Constants;
 
-
 import java.util.Arrays;
 
 import javax.inject.Inject;
@@ -33,8 +32,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.lavendergoons.dndcharacter.utils.Utils.checkIntNotNull;
 import static java.lang.Integer.parseInt;
-import static com.lavendergoons.dndcharacter.utils.Utils.checkInputNotNull;
 
 
 /**
@@ -515,54 +514,54 @@ public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialog
     //**********************************************************
 
     private void readAbilityGeneralValues() {
-        abilities.setHp(checkInputNotNull(abilityHpEdit));
-        abilities.setNonLethal(checkInputNotNull(abilityNonLethalEdit));
-        abilities.setBaseAtk(checkInputNotNull(abilityBaseAtkEdit));
-        abilities.setSpellRes(checkInputNotNull(abilitySpellResEdit));
-        abilities.setInitiative(checkInputNotNull(abilityInitiativeEdit));
-        abilities.setSpeed(checkInputNotNull(abilitySpeedEdit));
+        abilities.setHp(checkIntNotNull(abilityHpEdit));
+        abilities.setNonLethal(checkIntNotNull(abilityNonLethalEdit));
+        abilities.setBaseAtk(checkIntNotNull(abilityBaseAtkEdit));
+        abilities.setSpellRes(checkIntNotNull(abilitySpellResEdit));
+        abilities.setInitiative(checkIntNotNull(abilityInitiativeEdit));
+        abilities.setSpeed(checkIntNotNull(abilitySpeedEdit));
 
-        abilities.setFort(checkInputNotNull(saveFortValue), Abilities.SAVE_TOTAL);
-        abilities.setReflex(checkInputNotNull(saveReflexValue), Abilities.SAVE_TOTAL);
-        abilities.setWill(checkInputNotNull(saveWillValue), Abilities.SAVE_TOTAL);
+        abilities.setFort(checkIntNotNull(saveFortValue), Abilities.SAVE_TOTAL);
+        abilities.setReflex(checkIntNotNull(saveReflexValue), Abilities.SAVE_TOTAL);
+        abilities.setWill(checkIntNotNull(saveWillValue), Abilities.SAVE_TOTAL);
 
-        abilities.setAC(checkInputNotNull(acGenValue), Abilities.AC_TOTAL);
+        abilities.setAC(checkIntNotNull(acGenValue), Abilities.AC_TOTAL);
     }
 
     private void readGrappleValues() {
         int[] array = new int[]{0,0,0,0,0};
-        array[Abilities.GRAPPLE_BASE] = checkInputNotNull(grappleBaseAttackEdit);
-        array[Abilities.GRAPPLE_STR] = checkInputNotNull(grappleStrModEdit);
-        array[Abilities.GRAPPLE_SIZE] = checkInputNotNull(grappleSizeModEdit);
-        array[Abilities.GRAPPLE_MISC] = checkInputNotNull(grappleMiscModEdit);
-        array[Abilities.GRAPPLE_TOTAL] = checkInputNotNull(grappleTotalEdit);
+        array[Abilities.GRAPPLE_BASE] = checkIntNotNull(grappleBaseAttackEdit);
+        array[Abilities.GRAPPLE_STR] = checkIntNotNull(grappleStrModEdit);
+        array[Abilities.GRAPPLE_SIZE] = checkIntNotNull(grappleSizeModEdit);
+        array[Abilities.GRAPPLE_MISC] = checkIntNotNull(grappleMiscModEdit);
+        array[Abilities.GRAPPLE_TOTAL] = checkIntNotNull(grappleTotalEdit);
         abilities.setGrappleArray(array);
     }
 
     private void readMoneyValues() {
-        abilities.setPlatinum(checkInputNotNull(platinumEdit));
-        abilities.setGold(checkInputNotNull(goldEdit));
-        abilities.setSilver(checkInputNotNull(silverEdit));
-        abilities.setCopper(checkInputNotNull(copperEdit));
+        abilities.setPlatinum(checkIntNotNull(platinumEdit));
+        abilities.setGold(checkIntNotNull(goldEdit));
+        abilities.setSilver(checkIntNotNull(silverEdit));
+        abilities.setCopper(checkIntNotNull(copperEdit));
     }
 
     private void readScoreModValues() {
         int[] scores = new int[]{0,0,0,0,0,0};
         int[] mods = new int[]{0,0,0,0,0,0};
 
-        scores[Abilities.STR] = checkInputNotNull(abilityStrScoreEdit);
-        scores[Abilities.DEX] = checkInputNotNull(abilityDexScoreEdit);
-        scores[Abilities.CON] = checkInputNotNull(abilityConScoreEdit);
-        scores[Abilities.INT] = checkInputNotNull(abilityIntScoreEdit);
-        scores[Abilities.WIS] = checkInputNotNull(abilityWisScoreEdit);
-        scores[Abilities.CHA] = checkInputNotNull(abilityChaScoreEdit);
+        scores[Abilities.STR] = checkIntNotNull(abilityStrScoreEdit);
+        scores[Abilities.DEX] = checkIntNotNull(abilityDexScoreEdit);
+        scores[Abilities.CON] = checkIntNotNull(abilityConScoreEdit);
+        scores[Abilities.INT] = checkIntNotNull(abilityIntScoreEdit);
+        scores[Abilities.WIS] = checkIntNotNull(abilityWisScoreEdit);
+        scores[Abilities.CHA] = checkIntNotNull(abilityChaScoreEdit);
 
-        mods[Abilities.STR] = checkInputNotNull(abilityStrModEdit);
-        mods[Abilities.DEX] = checkInputNotNull(abilityDexModEdit);
-        mods[Abilities.CON] = checkInputNotNull(abilityConModEdit);
-        mods[Abilities.INT] = checkInputNotNull(abilityIntModEdit);
-        mods[Abilities.WIS] = checkInputNotNull(abilityWisModEdit);
-        mods[Abilities.CHA] = checkInputNotNull(abilityChaModEdit);
+        mods[Abilities.STR] = checkIntNotNull(abilityStrModEdit);
+        mods[Abilities.DEX] = checkIntNotNull(abilityDexModEdit);
+        mods[Abilities.CON] = checkIntNotNull(abilityConModEdit);
+        mods[Abilities.INT] = checkIntNotNull(abilityIntModEdit);
+        mods[Abilities.WIS] = checkIntNotNull(abilityWisModEdit);
+        mods[Abilities.CHA] = checkIntNotNull(abilityChaModEdit);
 
         abilities.setScoreArray(scores);
         abilities.setModArray(mods);

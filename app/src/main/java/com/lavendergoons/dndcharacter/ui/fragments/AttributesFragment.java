@@ -1,23 +1,22 @@
 package com.lavendergoons.dndcharacter.ui.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.crash.FirebaseCrash;
 import com.lavendergoons.dndcharacter.models.SimpleCharacter;
 import com.lavendergoons.dndcharacter.R;
 import com.lavendergoons.dndcharacter.ui.adapters.AttributesAdapter;
-import com.lavendergoons.dndcharacter.ui.interfaces.FragmentInterface;
-import com.lavendergoons.dndcharacter.utils.CharacterManager;
+import com.lavendergoons.dndcharacter.utils.CharacterManager2;
 import com.lavendergoons.dndcharacter.utils.Constants;
 import com.lavendergoons.dndcharacter.utils.Utils;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 
 public class AttributesFragment extends BaseFragment implements AttributesAdapter.AttributesAdapterListener {
@@ -29,7 +28,9 @@ public class AttributesFragment extends BaseFragment implements AttributesAdapte
     private RecyclerView.LayoutManager mAttributeLayoutManager;
     private ArrayList<String> attributesList = new ArrayList<>(Constants.ATTRIBUTES.length);
     private SimpleCharacter simpleCharacter;
-    private CharacterManager characterManager;
+
+    @Inject
+    private CharacterManager2 characterManager;
 
     private long characterId = -1;
     private final int NAME = 0;
@@ -55,8 +56,7 @@ public class AttributesFragment extends BaseFragment implements AttributesAdapte
             characterId = getArguments().getLong(Constants.CHARACTER_ID);
             simpleCharacter = getArguments().getParcelable(Constants.CHARACTER_KEY);
         }
-        characterManager = CharacterManager.getInstance();
-        //attributesList = characterManager.getCharacterAttributes();
+        attributesList = characterManager.getAttributes(characterId);
 
         // Fill attribute list with empty data
         if (attributesList.size() == 0) {
@@ -85,9 +85,9 @@ public class AttributesFragment extends BaseFragment implements AttributesAdapte
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
+        super.onPause();
         writeAttributes();
-        super.onStop();
     }
 
     private void writeAttributes() {
@@ -95,18 +95,9 @@ public class AttributesFragment extends BaseFragment implements AttributesAdapte
         if (!Utils.isStringEmpty(attributesList.get(NAME))) {
             simpleCharacter.setName(attributesList.get(NAME));
         }
-        if (!Utils.isStringEmpty(String.valueOf(attributesList.get(LEVEL)))) {
-            int lvl = 0;
-            try {
-                lvl = Integer.parseInt(attributesList.get(LEVEL));
-            } catch (Exception ex) {
-                FirebaseCrash.log(TAG +ex.toString());
-                ex.printStackTrace();
-            }
-            simpleCharacter.setLevel(lvl);
-        }
-        //characterManager.setSimpleCharacter(simpleCharacter);
-        //characterManager.setCharacterAttributes(attributesList);
+        simpleCharacter.setLevel(Utils.stringToInt(attributesList.get(LEVEL)));
+        characterManager.setSimpleCharacter(characterId, simpleCharacter);
+        characterManager.setAttributes(characterId, attributesList);
     }
 
     @Override

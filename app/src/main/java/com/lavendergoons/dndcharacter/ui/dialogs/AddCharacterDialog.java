@@ -1,9 +1,7 @@
 package com.lavendergoons.dndcharacter.ui.dialogs;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.lavendergoons.dndcharacter.ui.fragments.CharacterListFragment;
 import com.lavendergoons.dndcharacter.models.SimpleCharacter;
 import com.lavendergoons.dndcharacter.R;
 import com.lavendergoons.dndcharacter.utils.Utils;
@@ -19,14 +16,7 @@ import com.lavendergoons.dndcharacter.utils.Utils;
 /**
  * Initial simple SimpleCharacter creation dialog.
  */
-public class AddCharacterDialog extends DialogFragment {
-
-    private EditText nameEdit, levelEdit;
-    private CharacterListFragment fragment;
-
-    public AddCharacterDialog() {
-        super();
-    }
+public class AddCharacterDialog {
 
     public static void showAddCharacterDialog(final Activity activity, final AddCharacterDialog.OnCharacterCompleteListener target) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -67,17 +57,7 @@ public class AddCharacterDialog extends DialogFragment {
     }
 
 
-    public static interface OnCharacterCompleteListener {
+    public interface OnCharacterCompleteListener {
         void onCharacterComplete(SimpleCharacter simpleCharacter);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            OnCharacterCompleteListener mListener = (OnCharacterCompleteListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnCharacterCompleteListener");
-        }
     }
 }
