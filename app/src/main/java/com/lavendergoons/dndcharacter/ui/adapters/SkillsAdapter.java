@@ -17,6 +17,8 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.lavendergoons.dndcharacter.models.Abilities;
 import com.lavendergoons.dndcharacter.models.Skill;
 import com.lavendergoons.dndcharacter.R;
+import com.lavendergoons.dndcharacter.utils.Constants;
+import com.lavendergoons.dndcharacter.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -120,6 +122,16 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder
         return mDataset;
     }
 
+    public void setData(ArrayList<Skill> skills) {
+        if (skills.isEmpty()) {
+            for (Constants.Skills s : Constants.Skills.values()) {
+                skills.add(new Skill(s.getName(), s.getMod(), s.getDefault()));
+            }
+        }
+        mDataset = skills;
+        notifyDataSetChanged();
+    }
+
     public int modTypeToInt(String type) {
         int mod = 0;
         switch (type) {
@@ -160,15 +172,7 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            int value = -1;
-            try {
-                value = Integer.parseInt(charSequence.toString());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                FirebaseCrash.log(TAG +" Error parsing int in SkillsAdapter");
-            }
-            mDataset.get(position).setTotal(value);
-            Log.d("SKILL_TEXT", mDataset.get(position).toString());
+            mDataset.get(position).setTotal(Utils.stringToInt(charSequence.toString()));
         }
 
         @Override
@@ -189,13 +193,8 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            int value = -1;
-            try {
-                value = Integer.parseInt(charSequence.toString());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                FirebaseCrash.log(TAG +" Error parsing int in SkillsAdapter");
-            }
+            int value = Utils.stringToInt(charSequence.toString());
+
             mDataset.get(position).setMod(value);
             int mod = mDataset.get(position).getMisc();
             int rank = mDataset.get(position).getRank();
@@ -287,7 +286,6 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.ViewHolder
         }
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            Log.d("SKILLS", mDataset.get(position).getName()+" isChecked "+b);
             mDataset.get(position).setTrained(b);
         }
     }

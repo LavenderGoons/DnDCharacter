@@ -5,8 +5,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.Gson;
 import com.lavendergoons.dndcharacter.di.scope.DataScope;
 import com.lavendergoons.dndcharacter.models.SimpleCharacter;
@@ -17,6 +19,16 @@ import java.util.ArrayList;
 
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.R.attr.type;
 import static com.lavendergoons.dndcharacter.data.DatabaseHelper.COLUMN_ABILITIES;
@@ -38,6 +50,7 @@ public class DBAdapter {
     public static final String TAG = "DATABASE_ADAPTER";
 
     private DatabaseHelper databaseHelper;
+    private SQLiteDatabase mDatabase;
     private Gson gson = new Gson();
 
     @Inject
@@ -45,10 +58,14 @@ public class DBAdapter {
         databaseHelper = new DatabaseHelper(context);
     }
 
+    private void checkDatabase() {
+        if (mDatabase == null) {mDatabase = databaseHelper.getWritableDatabase();}
+    }
+
 
     public ArrayList<SimpleCharacter> getSimpleCharacters() {
-        SQLiteDatabase database = databaseHelper.getReadableDatabase();
-        Cursor c = database.query(true, TABLE_CHARACTERS, new String[]{COLUMN_CHARACTER}, null, null, null, null, null, null);
+        checkDatabase();
+        Cursor c = mDatabase.query(true, TABLE_CHARACTERS, new String[]{COLUMN_CHARACTER}, null, null, null, null, null, null);
 
         ArrayList<SimpleCharacter> simpleCharacters = new ArrayList<>();
         if (c != null) {
@@ -59,15 +76,47 @@ public class DBAdapter {
                 simpleCharacters.add(simpleCharacter);
             }
             c.close();
-            database.close();
             return simpleCharacters;
         }
         return null;
     }
 
+    @SuppressWarnings("TryWithIdenticalCatches")
+    public Observable<ArrayList<SimpleCharacter>> getSimpleCharacterObservable() {
+        checkDatabase();
+        return Observable.create(new ObservableOnSubscribe<ArrayList<SimpleCharacter>>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<ArrayList<SimpleCharacter>> e) throws Exception {
+                Cursor cursor = null;
+                try {
+                    cursor = mDatabase.query(true, TABLE_CHARACTERS, new String[]{COLUMN_CHARACTER}, null, null, null, null, null, null);
+                    // TODO Maybe Observable of String, and emit string onNext, with a Map to simplecharacter
+
+                    ArrayList<SimpleCharacter> simpleCharacters = new ArrayList<>();
+                    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                        String json = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CHARACTER));
+
+                        SimpleCharacter simpleCharacter = gson.fromJson(json, SimpleCharacter.class);
+                        simpleCharacters.add(simpleCharacter);
+                    }
+                    e.onNext(simpleCharacters);
+                    e.onComplete();
+                } catch (SQLiteException ex) {
+                    Utils.logError(ex);
+                    e.onError(ex);
+                } catch (IllegalArgumentException ex1) {
+                    Utils.logError(ex1);
+                    e.onError(ex1);
+                } finally {
+                    if (cursor != null) {cursor.close();}
+                }
+            }
+        }).subscribeOn(Schedulers.computation());
+    }
+
     public long getCharacterId(String name) {
-        SQLiteDatabase database = databaseHelper.getReadableDatabase();
-        Cursor c = database.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, COLUMN_CHARACTER}, null, null, null, null, null, null);
+        checkDatabase();
+        Cursor c = mDatabase.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, COLUMN_CHARACTER}, null, null, null, null, null, null);
         long id = -1;
 
         if (c != null) {
@@ -80,22 +129,19 @@ public class DBAdapter {
                 }
             }
             c.close();
-            database.close();
         }
         return id;
     }
 
     public boolean insertRow(String simpleCharacterJson) {
         if (!Utils.isStringEmpty(simpleCharacterJson)) {
-            SQLiteDatabase database = databaseHelper.getWritableDatabase();
-
+            checkDatabase();
             ContentValues values = new ContentValues();
             values = fillBlankColumns(values);
             values.put(COLUMN_CHARACTER, simpleCharacterJson);
 
-            long id = database.insert(TABLE_CHARACTERS, null, values);
+            long id = mDatabase.insert(TABLE_CHARACTERS, null, values);
             Log.d(TAG, "Insert Row ID "+id+" for character "+simpleCharacterJson);
-            database.close();
             return true;
         }
         return false;
@@ -114,34 +160,60 @@ public class DBAdapter {
 
     public <T> ArrayList<T> getListColumn(long id, String column, Type jsonType) {
         if (!Utils.isStringEmpty(column)) {
-
-            SQLiteDatabase database = databaseHelper.getReadableDatabase();
-            Cursor cursor = database.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?", new String[]{String.valueOf(id)}, null, null, null, null);
+            checkDatabase();
+            Cursor cursor = mDatabase.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?", new String[]{String.valueOf(id)}, null, null, null, null);
             cursor.moveToFirst();
             String json = cursor.getString(cursor.getColumnIndex(column));
 
             if (json != null && !Utils.isStringEmpty(json) && !json.equals("[]") && !json.equals("[ ]")) {
                 ArrayList<T> list = gson.fromJson(json, jsonType);
                 cursor.close();
-                database.close();
                 return list;
             }
         }
         return null;
     }
 
+    @SuppressWarnings("TryWithIdenticalCatches")
+    public Observable<String> getObservableJson(final long id, final String column) {
+        checkDatabase();
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                Cursor cursor = null;
+                try {
+                    cursor = mDatabase.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?",
+                            new String[]{String.valueOf(id)}, null, null, null, null);
+                    cursor.moveToFirst();
+                    String json = cursor.getString(cursor.getColumnIndexOrThrow(column));
+                    Log.d(TAG, "getObservableJson: Thread "+Thread.currentThread().getName());
+                    e.onNext(json);
+                    e.onComplete();
+                } catch (SQLiteException ex) {
+                    ex.printStackTrace();
+                    FirebaseCrash.log(ex.toString());
+                    e.onError(ex);
+                } catch (IllegalArgumentException ex1) {
+                    ex1.printStackTrace();
+                    FirebaseCrash.log(ex1.toString());
+                    e.onError(ex1);
+                } finally {
+                    if (cursor != null ) {cursor.close();}
+                }
+            }
+        });
+    }
+
     public <T> T getObjectColumn(long id, String column, Type type) {
         if (!Utils.isStringEmpty(column)) {
-
-            SQLiteDatabase database = databaseHelper.getReadableDatabase();
-            Cursor cursor = database.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?", new String[]{String.valueOf(id)}, null, null, null, null);
+            checkDatabase();
+            Cursor cursor = mDatabase.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?", new String[]{String.valueOf(id)}, null, null, null, null);
             cursor.moveToFirst();
-            String json = cursor.getString(cursor.getColumnIndex(column));
+            String json = cursor.getString(cursor.getColumnIndexOrThrow(column));
 
             if (json != null && !Utils.isStringEmpty(json)) {
                 T item = gson.fromJson(json, type);
                 cursor.close();
-                database.close();
                 return item;
             }
         }
@@ -150,26 +222,23 @@ public class DBAdapter {
 
     public String getJsonString(long id, String column) {
         if (!Utils.isStringEmpty(column)) {
-
-            SQLiteDatabase database = databaseHelper.getReadableDatabase();
-            Cursor cursor = database.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?", new String[]{String.valueOf(id)}, null, null, null, null);
+            checkDatabase();
+            Cursor cursor = mDatabase.query(true, TABLE_CHARACTERS, new String[]{COLUMN_ID, column}, COLUMN_ID+ " = ?", new String[]{String.valueOf(id)}, null, null, null, null);
             String json = cursor.getString(cursor.getColumnIndex(column));
 
             cursor.close();
-            database.close();
             return json;
         }
         return null;
     }
 
-    public boolean fillColumn(long id, String col, String value) {
+    public synchronized boolean fillColumn(long id, String col, String value) {
         if (!Utils.isStringEmpty(value) && !Utils.isStringEmpty(col)) {
-            SQLiteDatabase database = databaseHelper.getWritableDatabase();
+            checkDatabase();
             ContentValues values = new ContentValues();
             values.put(col, value);
             // Update TABLE with values WHERE COLUMN_ID = id
-            database.update(TABLE_CHARACTERS, values, COLUMN_ID+" = ?", new String[]{String.valueOf(id)});
-            database.close();
+            mDatabase.update(TABLE_CHARACTERS, values, COLUMN_ID+" = ?", new String[]{String.valueOf(id)});
             return true;
         }
         return false;
@@ -177,9 +246,9 @@ public class DBAdapter {
 
 
     public int deleteRow(long id) {
-        SQLiteDatabase database = databaseHelper.getWritableDatabase();
+        checkDatabase();
         String where = COLUMN_ID + " = ?";
-        return database.delete(TABLE_CHARACTERS, where, new String[]{String.valueOf(id)});
+        return mDatabase.delete(TABLE_CHARACTERS, where, new String[]{String.valueOf(id)});
     }
 
     private ContentValues fillBlankColumns(ContentValues values) {

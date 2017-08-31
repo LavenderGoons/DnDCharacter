@@ -113,8 +113,6 @@ public class AttacksFragment extends BaseFragment
         mAttacksRecyclerAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void OnAttackDialogNegative() {}
 
     @Override
     public void ConfirmDialogOk(Object attack) {
@@ -124,8 +122,6 @@ public class AttacksFragment extends BaseFragment
         }
     }
 
-    @Override
-    public void ConfirmDialogCancel(Object o) {}
 
     @Override
     public void removeAttack(Attack attack) {

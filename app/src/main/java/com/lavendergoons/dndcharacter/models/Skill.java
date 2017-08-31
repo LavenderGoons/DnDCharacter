@@ -12,6 +12,16 @@ public class Skill {
     private int rank;
     private int misc;
 
+    public Skill(String name, String modType, boolean isTrained) {
+        this.name = name;
+        this.modType = modType;
+        this.isTrained = isTrained;
+        this.total = 0;
+        this.mod = 0;
+        this.rank = 0;
+        this.misc = 0;
+    }
+
     public Skill(String name, String modType, boolean isTrained, int total, int mod, int rank, int misc) {
         this.name = name;
         this.modType = modType;

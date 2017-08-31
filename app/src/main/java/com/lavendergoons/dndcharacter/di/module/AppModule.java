@@ -3,6 +3,8 @@ package com.lavendergoons.dndcharacter.di.module;
 
 import android.content.Context;
 
+import com.lavendergoons.dndcharacter.di.scope.DataScope;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -16,6 +18,7 @@ public class AppModule {
     }
 
     @Provides
+    @DataScope
     public Context context() {
         return context;
     }

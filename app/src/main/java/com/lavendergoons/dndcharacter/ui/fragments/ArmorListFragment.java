@@ -3,21 +3,17 @@ package com.lavendergoons.dndcharacter.ui.fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
 import com.lavendergoons.dndcharacter.ui.dialogs.ConfirmationDialog;
 import com.lavendergoons.dndcharacter.models.Armor;
 import com.lavendergoons.dndcharacter.models.SimpleCharacter;
@@ -30,10 +26,6 @@ import com.lavendergoons.dndcharacter.utils.Utils;
 import java.util.ArrayList;
 
 import static android.R.attr.dialogLayout;
-import static android.R.attr.fragment;
-import static com.lavendergoons.dndcharacter.R.id.armorDialogName;
-import static com.lavendergoons.dndcharacter.R.id.armorDialogQuantity;
-import static com.lavendergoons.dndcharacter.R.id.armorDialogWeight;
 
 
 /**
@@ -122,10 +114,6 @@ public class ArmorListFragment extends BaseFragment implements
 
     private void launchArmorDetail(Armor armor) {
         LayoutInflater layoutInflater = this.getLayoutInflater(null);
-        Log.d(TAG, "getView(): "+getView().toString());
-        Log.d(TAG, "getView().getParent(): "+getView().getParent().toString());
-        Log.d(TAG, "getView().getRootView(): "+getView().getRootView());
-        //layoutInflater.inflate(R.layout.fragment_armor2, (ViewGroup) getView().getParent());
     }
 
     private int addArmor(Armor armor) {

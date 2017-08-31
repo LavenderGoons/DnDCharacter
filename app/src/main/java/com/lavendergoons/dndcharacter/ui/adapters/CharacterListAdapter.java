@@ -77,6 +77,11 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         });
     }
 
+    public void setData(ArrayList<SimpleCharacter> dataIn) {
+        this.mDataset = dataIn;
+        this.notifyDataSetChanged();
+    }
+
     private void onCardClick(ViewHolder holder, int position) {
         String name = holder.mNameTextView.getText().toString();
         listener.onCharacterClick(mDataset.get(position));

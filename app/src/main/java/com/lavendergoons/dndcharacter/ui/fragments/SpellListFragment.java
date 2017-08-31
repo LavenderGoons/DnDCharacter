@@ -125,9 +125,6 @@ public class SpellListFragment extends BaseFragment
         }
     }
 
-    @Override
-    public void ConfirmDialogCancel(Object o) {}
-
 
     @Override
     public void removeSpell(Spell spell) {

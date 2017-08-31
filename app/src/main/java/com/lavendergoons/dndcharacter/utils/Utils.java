@@ -107,4 +107,9 @@ public class Utils {
         }
         return value;
     }
+
+    public static void logError(Exception ex) {
+        ex.printStackTrace();
+        FirebaseCrash.log(ex.toString());
+    }
 }

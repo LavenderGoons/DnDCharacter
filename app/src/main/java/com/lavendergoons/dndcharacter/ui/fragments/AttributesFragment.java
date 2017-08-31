@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lavendergoons.dndcharacter.DndApplication;
 import com.lavendergoons.dndcharacter.models.SimpleCharacter;
 import com.lavendergoons.dndcharacter.R;
 import com.lavendergoons.dndcharacter.ui.adapters.AttributesAdapter;
@@ -29,8 +30,7 @@ public class AttributesFragment extends BaseFragment implements AttributesAdapte
     private ArrayList<String> attributesList = new ArrayList<>(Constants.ATTRIBUTES.length);
     private SimpleCharacter simpleCharacter;
 
-    @Inject
-    private CharacterManager2 characterManager;
+    @Inject CharacterManager2 characterManager;
 
     private long characterId = -1;
     private final int NAME = 0;
@@ -52,6 +52,7 @@ public class AttributesFragment extends BaseFragment implements AttributesAdapte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DndApplication.get(this).getAppComponent().inject(this);
         if (getArguments() != null) {
             characterId = getArguments().getLong(Constants.CHARACTER_ID);
             simpleCharacter = getArguments().getParcelable(Constants.CHARACTER_KEY);

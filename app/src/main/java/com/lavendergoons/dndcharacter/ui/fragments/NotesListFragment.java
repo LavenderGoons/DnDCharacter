@@ -132,12 +132,6 @@ public class NotesListFragment extends BaseFragment
         mNotesRecyclerAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void ConfirmDialogCancel(Object o) {
-
-    }
-
-
     private int addNote(Note note) {
         int i = -1;
         if (note != null) {

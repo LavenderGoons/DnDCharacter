@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/skillCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="CheckBoxSample"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/skillMiscText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gen_misc"
+        android:textSize="16sp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/skillModText"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/skillModText" />
+    <!-- android:textColor="?android:attr/colorControlNormal" -->
+
+    <TextView
+        android:id="@+id/skillRankText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gen_rank"
+        android:textSize="16sp"
+        app:layout_constraintRight_toLeftOf="@+id/skillRankEdit"
+        app:layout_constraintTop_toTopOf="@+id/skillModEdit"
+        app:layout_constraintLeft_toRightOf="@+id/skillModEdit"
+        app:layout_constraintBottom_toBottomOf="@+id/skillModEdit" />
+
+    <TextView
+        android:id="@+id/skillModText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gen_mod"
+        android:textSize="16sp"
+        app:layout_constraintRight_toLeftOf="@+id/skillModEdit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/skillCheckBox" />
+
+    <TextView
+        android:id="@+id/skillTotalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gen_total"
+        android:textSize="16sp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/skillRankText"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/skillRankText" />
+
+    <EditText
+        android:id="@+id/skillModEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="4"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:gravity="center_horizontal"
+        app:layout_constraintRight_toLeftOf="@+id/skillRankText"
+        app:layout_constraintTop_toTopOf="@+id/skillModText"
+        app:layout_constraintLeft_toRightOf="@+id/skillModText"
+        app:layout_constraintBottom_toBottomOf="@+id/skillModText" />
+
+    <EditText
+        android:id="@+id/skillRankEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="4"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:gravity="center_horizontal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/skillRankText"
+        app:layout_constraintLeft_toRightOf="@+id/skillRankText"
+        app:layout_constraintBottom_toBottomOf="@+id/skillRankText" />
+
+    <EditText
+        android:id="@+id/skillMiscEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="4"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/skillModEdit"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/skillModEdit" />
+
+    <EditText
+        android:id="@+id/skillTotalEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="4"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/skillRankEdit"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/skillRankEdit" />
+
+</android.support.constraint.ConstraintLayout>

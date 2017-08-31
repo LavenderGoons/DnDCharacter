@@ -112,8 +112,6 @@ public class ItemsGeneralFragment extends BaseFragment
         mItemsRecyclerAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void OnItemsNegative() {}
 
     @Override
     public void ConfirmDialogOk(Object item) {
@@ -123,8 +121,7 @@ public class ItemsGeneralFragment extends BaseFragment
         }
     }
 
-    @Override
-    public void ConfirmDialogCancel(Object o) {}
+
 
     @Override
     public void removeItem(Item item) {

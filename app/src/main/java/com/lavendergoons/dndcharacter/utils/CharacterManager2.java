@@ -22,6 +22,14 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 @DataScope
 public class CharacterManager2 {
 
@@ -36,9 +44,7 @@ public class CharacterManager2 {
     }
 
     private void checkCharacter() {
-        if (character2 == null) {
-            character2 = new Character2();
-        }
+        if (character2 == null) {character2 = new Character2();}
     }
 
     //**********************************************************
@@ -47,6 +53,10 @@ public class CharacterManager2 {
 
     public ArrayList<SimpleCharacter> getSimpleCharacters() {
         return dbAdapter.getSimpleCharacters();
+    }
+
+    public Observable<ArrayList<SimpleCharacter>> getSimpleCharacterObservable() {
+        return dbAdapter.getSimpleCharacterObservable();
     }
 
     public void createCharacter(SimpleCharacter simpleCharacter) {
@@ -75,6 +85,11 @@ public class CharacterManager2 {
     //**********************************************************
     // Character Accessor Methods
     //**********************************************************
+
+    public Observable<String> getObservableJson(long id, String column) {
+        checkCharacter();
+        return dbAdapter.getObservableJson(id, column);
+    }
 
     //TODO Find a better way
 
@@ -182,6 +197,15 @@ public class CharacterManager2 {
         return character2.getSkillsList();
     }
 
+    public Observable<String> getSkillsObservable(final long id) {
+        checkCharacter();
+        return dbAdapter.getObservableJson(id, DatabaseHelper.COLUMN_SKILL);
+    }
+
+    public void setSkills(final long id, ArrayList<Skill> skills) {
+        writeToDatabaseSingle(id, DatabaseHelper.COLUMN_SKILL, gson.toJson(skills));
+    }
+
     public ArrayList<Spell> getSpell(long id) {
         checkCharacter();
         if (character2.getSpellList().size() == 0) {
@@ -195,6 +219,18 @@ public class CharacterManager2 {
 
     private void writeToDatabase(long id, String column, String json) {
         dbAdapter.fillColumn(id, column, json);
+
+    }
+
+    private void writeToDatabaseSingle(final long id, final String column, String json) {
+        Single.just(json)
+                .subscribeOn(Schedulers.computation())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(@NonNull String s) throws Exception {
+                        dbAdapter.fillColumn(id, column, s);
+                    }
+                });
     }
 
     //**********************************************************

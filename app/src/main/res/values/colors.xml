@@ -3,6 +3,8 @@
     <color name="colorPrimary">#006494</color>
     <color name="colorPrimaryDark">#004271</color>
     <color name="colorAccent">#F57C00</color>
+    <!-- TODO CHANGE THIS GET DEFAULT FROM THEME -->
+    <color name="defaultColor">#C0C0C0</color>
 </resources>
 
 <!--

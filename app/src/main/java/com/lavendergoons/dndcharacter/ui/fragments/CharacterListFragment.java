@@ -6,13 +6,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.lavendergoons.dndcharacter.DndApplication;
-import com.lavendergoons.dndcharacter.data.DBAdapter;
 import com.lavendergoons.dndcharacter.ui.dialogs.AddCharacterDialog;
 import com.lavendergoons.dndcharacter.ui.dialogs.ConfirmationDialog;
 import com.lavendergoons.dndcharacter.models.SimpleCharacter;
@@ -23,6 +22,12 @@ import com.lavendergoons.dndcharacter.utils.CharacterManager2;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 
 
 public class CharacterListFragment extends Fragment implements
@@ -36,6 +41,7 @@ public class CharacterListFragment extends Fragment implements
     private ArrayList<SimpleCharacter> simpleCharacters = new ArrayList<>();
     private FloatingActionButton addCharacterFAB;
     private OnCharacterClickListener mListener;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Inject
     CharacterManager2 characterManager;
@@ -83,6 +89,23 @@ public class CharacterListFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
+        Observable<ArrayList<SimpleCharacter>> observable = characterManager.getSimpleCharacterObservable();
+        //TODO Add ProgressBar
+        disposable.add(observable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ArrayList<SimpleCharacter>>() {
+            @Override
+            public void accept(@NonNull ArrayList<SimpleCharacter> simpleChars) throws Exception {
+                simpleCharacters = simpleChars;
+                mCharRecyclerAdapter.setData(simpleChars);
+            }
+        }));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposable.clear();
     }
 
     @Override
@@ -104,10 +127,6 @@ public class CharacterListFragment extends Fragment implements
         }
     }
 
-    @Override
-    public void ConfirmDialogCancel(Object o) {
-
-    }
 
     @Override
     public void onCharacterComplete(SimpleCharacter simpleCharacter) {
