@@ -10,6 +10,7 @@ import com.lavendergoons.dndcharacter.di.scope.DataScope;
 import com.lavendergoons.dndcharacter.models.Abilities;
 import com.lavendergoons.dndcharacter.models.Armor;
 import com.lavendergoons.dndcharacter.models.Attack;
+import com.lavendergoons.dndcharacter.models.Attributes;
 import com.lavendergoons.dndcharacter.models.Feat;
 import com.lavendergoons.dndcharacter.models.Item;
 import com.lavendergoons.dndcharacter.models.Note;
@@ -64,9 +65,13 @@ public class CharacterManager2 {
         dbAdapter.insertRow(characterJson);
     }
 
+    /*
     public void setSimpleCharacter(long id, SimpleCharacter simpleCharacter) {
         writeToDatabase(id, DatabaseHelper.COLUMN_CHARACTER, gson.toJson(simpleCharacter));
-        //Log.d(TAG, simpleCharacter.toString());
+    }*/
+
+    public void setSimpleCharacter(long id, SimpleCharacter simpleCharacter) {
+        writeToDatabaseSingle(id, DatabaseHelper.COLUMN_CHARACTER, gson.toJson(simpleCharacter));
     }
 
     public void removeCharacter(SimpleCharacter simpleCharacter) {
@@ -134,23 +139,8 @@ public class CharacterManager2 {
         return character2.getAttackList();
     }
 
-    public ArrayList<String> getAttributes(long id) {
-        checkCharacter();
-        if (character2.getAttributesList().size() == 0) {
-            Type type = new TypeToken<ArrayList<String>>(){}.getType();
-            ArrayList<String> list = dbAdapter.getListColumn(id, DatabaseHelper.COLUMN_ATTRIBUTES, type);
-            character2.setAttributesList(list);
-            list = null;
-        }
-        return character2.getAttributesList();
-    }
-
-    public void setAttributes(long id, ArrayList<String> attributes) {
-        if (attributes != null) {
-            character2.setAttributesList(attributes);
-            String json = gson.toJson(attributes);
-            writeToDatabase(id, DatabaseHelper.COLUMN_ATTRIBUTES, json);
-        }
+    public void setAttributes(long id, Attributes attributes) {
+        writeToDatabaseSingle(id, DatabaseHelper.COLUMN_ATTRIBUTES, gson.toJson(attributes));
     }
 
     public ArrayList<Feat> getFeats(long id) {
@@ -184,22 +174,6 @@ public class CharacterManager2 {
             list = null;
         }
         return character2.getNotesList();
-    }
-
-    public ArrayList<Skill> getSkills(long id) {
-        checkCharacter();
-        if (character2.getSkillsList().size() == 0) {
-            Type type = new TypeToken<ArrayList<Skill>>(){}.getType();
-            ArrayList<Skill> list = dbAdapter.getListColumn(id, DatabaseHelper.COLUMN_SKILL, type);
-            character2.setSkillsList(list);
-            list = null;
-        }
-        return character2.getSkillsList();
-    }
-
-    public Observable<String> getSkillsObservable(final long id) {
-        checkCharacter();
-        return dbAdapter.getObservableJson(id, DatabaseHelper.COLUMN_SKILL);
     }
 
     public void setSkills(final long id, ArrayList<Skill> skills) {

@@ -65,6 +65,8 @@
 
     <!-- Warnings -->
     <string name="warning_enter_required_fields">Please Enter All Required Fields</string>
+    <string name="warning_no_empty_name">Name Field Can Not Be Empty</string>
+    <string name="warning_no_empty_level">Level Field Can Not Be Empty</string>
     <string name="warning_database_not_initialized">Database not initialized</string>
 
     <!-- Confirmations -->
@@ -102,6 +104,19 @@
     <string name="gen_gold">Gold</string>
     <string name="gen_silver">Silver</string>
     <string name="gen_copper">Copper</string>
+
+    <!-- Lists -->
+    <string-array name="alignments">
+        <item>LG</item>
+        <item>NG</item>
+        <item>CG</item>
+        <item>LN</item>
+        <item>NN</item>
+        <item>CN</item>
+        <item>LE</item>
+        <item>NE</item>
+        <item>CE</item>
+    </string-array>
 
     <!-- Labels -->
     <string name="label_nav_character_sections">Character Sections</string>

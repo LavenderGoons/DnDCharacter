@@ -102,10 +102,10 @@ public class DBAdapter {
                     e.onNext(simpleCharacters);
                     e.onComplete();
                 } catch (SQLiteException ex) {
-                    Utils.logError(ex);
+                    Utils.logError(ex, TAG);
                     e.onError(ex);
                 } catch (IllegalArgumentException ex1) {
-                    Utils.logError(ex1);
+                    Utils.logError(ex1, TAG);
                     e.onError(ex1);
                 } finally {
                     if (cursor != null) {cursor.close();}

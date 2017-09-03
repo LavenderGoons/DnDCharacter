@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/attrSkinLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/attr_skin"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/attrSkinEdit"
+        app:layout_constraintRight_toRightOf="@+id/attrSkinEdit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/attrGenderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/attr_gender"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/attrGenderEdit"
+        app:layout_constraintRight_toRightOf="@+id/attrGenderEdit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/attrHeightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/attr_height"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/attrHeightEdit"
+        app:layout_constraintRight_toRightOf="@+id/attrHeightEdit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/attrSkinEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="4"
+        android:hint="@string/attr_skin"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attrSkinLabel" />
+
+    <EditText
+        android:id="@+id/attrGenderEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="4"
+        android:hint="@string/attr_gender"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        app:layout_constraintBottom_toBottomOf="@+id/attrSkinEdit"
+        app:layout_constraintLeft_toRightOf="@+id/attrSkinEdit"
+        app:layout_constraintRight_toLeftOf="@+id/attrHeightEdit" />
+
+    <EditText
+        android:id="@+id/attrHeightEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="4"
+        android:hint="@string/attr_height"
+        android:inputType="numberDecimal"
+        android:gravity="center_horizontal"
+        android:selectAllOnFocus="true"
+        app:layout_constraintBottom_toBottomOf="@+id/attrGenderEdit"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/attrWeightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/gen_weight"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/attrSkinEdit"
+        app:layout_constraintRight_toRightOf="@+id/attrSkinEdit"
+        app:layout_constraintTop_toBottomOf="@+id/attrSkinEdit" />
+
+    <TextView
+        android:id="@+id/attrEyesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/attr_eyes"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/attrEyesEdit"
+        app:layout_constraintLeft_toLeftOf="@+id/attrEyesEdit"
+        app:layout_constraintRight_toRightOf="@+id/attrEyesEdit" />
+
+    <TextView
+        android:id="@+id/attrHairLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:selectAllOnFocus="true"
+        android:text="@string/attr_hair"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/attrHairEdit"
+        app:layout_constraintLeft_toLeftOf="@+id/attrHairEdit"
+        app:layout_constraintRight_toRightOf="@+id/attrHairEdit" />
+
+    <EditText
+        android:id="@+id/attrWeightEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="4"
+        android:hint="@string/gen_weight"
+        android:inputType="numberDecimal"
+        android:gravity="center_horizontal"
+        android:selectAllOnFocus="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attrWeightLabel" />
+
+    <EditText
+        android:id="@+id/attrEyesEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="4"
+        android:hint="@string/attr_eyes"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        app:layout_constraintBottom_toBottomOf="@+id/attrWeightEdit"
+        app:layout_constraintLeft_toRightOf="@+id/attrWeightEdit"
+        app:layout_constraintRight_toLeftOf="@+id/attrHairEdit" />
+
+    <EditText
+        android:id="@+id/attrHairEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="4"
+        android:hint="@string/attr_hair"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        app:layout_constraintBottom_toBottomOf="@+id/attrEyesEdit"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

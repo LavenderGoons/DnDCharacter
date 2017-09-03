@@ -1,6 +1,7 @@
 package com.lavendergoons.dndcharacter.utils;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -90,9 +91,10 @@ public class Utils {
     }
 
     /**
-     * String to int with checks
+     * Parses String to Int.
+     * Has default value 0 if failure
      * @param  input
-     * @return int value
+     * @return Parsed or Failed Int Value
      */
     public static int stringToInt(String input) {
         int value = 0;
@@ -108,8 +110,34 @@ public class Utils {
         return value;
     }
 
-    public static void logError(Exception ex) {
+    /**
+     * Parses String to Float.
+     * Has default value 0 if failure
+     * @param input
+     * @return Parsed or Failed Float Value
+     */
+    public static float stringToFloat(String input) {
+        float value = 0;
+        if (!isStringEmpty(input)) {
+            try {
+                value = Float.parseFloat(input);
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+                FirebaseCrash.log("exception: "+ex.toString());
+                value = 0;
+            }
+        }
+        return value;
+    }
+
+    public static void logError(Exception ex, String TAG, String msg) {
         ex.printStackTrace();
+        String error = (msg.isEmpty()) ? ex.toString() : "Message: "+msg+"\nException:"+ex.toString();
+        Log.e(TAG, error);
         FirebaseCrash.log(ex.toString());
+    }
+
+    public static void logError(Exception ex, String TAG) {
+        logError(ex, TAG, "");
     }
 }
