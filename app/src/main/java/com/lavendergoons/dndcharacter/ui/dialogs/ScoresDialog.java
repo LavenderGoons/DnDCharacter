@@ -22,7 +22,7 @@ import static java.lang.Integer.parseInt;
 
 public class ScoresDialog {
 
-    public static final String TAG = "SCORE_DIALOG";
+    public static final String TAG = ScoresDialog.class.getCanonicalName();
 
     private Activity activity;
     private ScoresDialogListener target;

@@ -41,7 +41,7 @@ import static java.lang.Integer.parseInt;
  */
 public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialogListener, SavesDialog.SavesDialogListener, ScoresDialog.ScoresDialogListener {
 
-    public static final String TAG = "ABILITIES_FRAG";
+    public static final String TAG = AbilitiesFragment.class.getCanonicalName();
 
     @Inject
     CharacterManager2 characterManager;

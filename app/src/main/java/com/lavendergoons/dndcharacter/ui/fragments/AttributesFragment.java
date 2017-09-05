@@ -38,7 +38,7 @@ import io.reactivex.functions.Function;
 
 public class AttributesFragment extends BaseFragment implements AttributesAdapter.AttributesAdapterListener {
 
-    public static final String TAG = "ATTRIBUTES_FRAG";
+    public static final String TAG = AttributesFragment.class.getCanonicalName();
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private SimpleCharacter simpleCharacter;

@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.ViewHolder> {
 
+    public static final String TAG = SpellAdapter.class.getCanonicalName();
+
     private Fragment fragment;
     private Context context;
     private SpellAdapterListener listener;

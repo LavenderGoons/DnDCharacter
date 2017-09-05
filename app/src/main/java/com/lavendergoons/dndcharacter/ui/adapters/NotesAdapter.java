@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
 
+    public static final String TAG = NotesAdapter.class.getCanonicalName();
+
     //private NotesListFragment fragment;
     private Fragment fragment;
     private NotesAdapterListener listener;

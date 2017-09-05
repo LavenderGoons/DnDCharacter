@@ -21,6 +21,8 @@ import com.lavendergoons.dndcharacter.utils.Utils;
 
 public class AttackDialog {
 
+    public static final String TAG = AttackDialog.class.getCanonicalName();
+
     private Fragment fragment;
     private Activity activity;
     private Attack attack;

@@ -35,7 +35,7 @@ public class SpellListFragment extends BaseFragment
         SpellAdapter.SpellAdapterListener,
         ConfirmationDialog.ConfirmationDialogInterface {
 
-    public static final String TAG = "SPELL_LIST_FRAG";
+    public static final String TAG = SpellListFragment.class.getCanonicalName();
 
     private RecyclerView mSpellRecyclerView;
     private RecyclerView.Adapter mSpellRecyclerAdapter;

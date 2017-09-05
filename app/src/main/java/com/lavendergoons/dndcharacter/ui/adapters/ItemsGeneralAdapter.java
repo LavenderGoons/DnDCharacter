@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 public class ItemsGeneralAdapter extends RecyclerView.Adapter<ItemsGeneralAdapter.ViewHolder> {
 
+    public static final String TAG = ItemsGeneralAdapter.class.getCanonicalName();
     private ArrayList<Item> mDataset;
     private Fragment fragment;
     private Context context;

@@ -40,7 +40,8 @@ import javax.inject.Inject;
 public class CharacterListActivity extends AppCompatActivity implements
         CharacterListFragment.OnCharacterClickListener{
 
-    public static final String TAG = "CHARACTER_LIST";
+    public static final String TAG = CharacterListActivity.class.getCanonicalName();
+
     private static final String FIRST_OPEN = "FIRST_OPEN";
     public static final String VERSION_CODE = "VERSION_CODE";
 

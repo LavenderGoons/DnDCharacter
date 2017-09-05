@@ -20,6 +20,8 @@ import java.util.ArrayList;
  */
 public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.ViewHolder> {
 
+    public static final String TAG = CharacterListAdapter.class.getCanonicalName();
+
     private ArrayList<SimpleCharacter> mDataset;
     private CharacterListAdapterListener listener;
     private Fragment fragment;

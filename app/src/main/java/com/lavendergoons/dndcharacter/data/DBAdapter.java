@@ -47,7 +47,7 @@ import static com.lavendergoons.dndcharacter.data.DatabaseHelper.TABLE_CHARACTER
 @DataScope
 public class DBAdapter {
 
-    public static final String TAG = "DATABASE_ADAPTER";
+    public static final String TAG = DBAdapter.class.getCanonicalName();
 
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase mDatabase;

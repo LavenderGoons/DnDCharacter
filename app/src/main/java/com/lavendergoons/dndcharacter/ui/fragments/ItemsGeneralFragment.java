@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class ItemsGeneralFragment extends BaseFragment
         implements View.OnClickListener, ItemGeneralDialog.ItemsGeneralDialogListener, ItemsGeneralAdapter.ItemsGeneralAdapterListener, ConfirmationDialog.ConfirmationDialogInterface {
 
-    public static final String TAG = "ITEMS_GENERAL_FRAG";
+    public static final String TAG = ItemsGeneralFragment.class.getCanonicalName();
 
 
     private RecyclerView mItemsRecyclerView;

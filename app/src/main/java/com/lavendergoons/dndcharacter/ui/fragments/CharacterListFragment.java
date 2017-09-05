@@ -33,7 +33,7 @@ import io.reactivex.functions.Consumer;
 public class CharacterListFragment extends Fragment implements
         AddCharacterDialog.OnCharacterCompleteListener, CharacterListAdapter.CharacterListAdapterListener, View.OnClickListener, ConfirmationDialog.ConfirmationDialogInterface {
 
-    public static final String TAG = "CHARACTER_LIST_FRAG";
+    public static final String TAG = CharacterListFragment.class.getCanonicalName();
 
     private RecyclerView mCharacterRecyclerView;
     private CharacterListAdapter mCharRecyclerAdapter;

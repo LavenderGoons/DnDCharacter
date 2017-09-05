@@ -34,7 +34,7 @@ import static android.R.attr.dialogLayout;
 public class ArmorListFragment extends BaseFragment implements
         View.OnClickListener, ConfirmationDialog.ConfirmationDialogInterface, ArmorAdapter.ArmorAdapterListener {
 
-    public static final String TAG = "ARMOR_LIST_FRAG";
+    public static final String TAG = ArmorListFragment.class.getCanonicalName();
 
     private RecyclerView mArmorRecyclerView;
     private RecyclerView.Adapter mArmorRecyclerAdapter;

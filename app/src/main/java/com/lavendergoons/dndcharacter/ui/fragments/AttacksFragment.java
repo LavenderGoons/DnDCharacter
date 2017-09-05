@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class AttacksFragment extends BaseFragment
         implements View.OnClickListener, AttackDialog.AttackDialogListener, AttackAdapter.AttackAdapterListener, ConfirmationDialog.ConfirmationDialogInterface {
 
-    public static final String TAG = "ATTACKS_FRAG";
+    public static final String TAG = AttacksFragment.class.getCanonicalName();
 
     private RecyclerView mAttacksRecyclerView;
     private RecyclerView.Adapter mAttacksRecyclerAdapter;

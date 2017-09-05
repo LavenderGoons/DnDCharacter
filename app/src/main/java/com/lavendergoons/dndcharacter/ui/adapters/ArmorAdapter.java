@@ -23,6 +23,8 @@ import java.util.ArrayList;
  */
 public class ArmorAdapter extends RecyclerView.Adapter<ArmorAdapter.ViewHolder> {
 
+    public static final String TAG = ArmorAdapter.class.getCanonicalName();
+
     private ArrayList<Armor> mDataset;
     private Context context;
     private Fragment fragment;

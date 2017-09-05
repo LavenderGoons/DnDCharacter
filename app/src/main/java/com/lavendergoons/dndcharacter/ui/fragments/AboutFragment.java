@@ -19,7 +19,7 @@ import com.lavendergoons.dndcharacter.R;
 
 public class AboutFragment extends Fragment implements View.OnClickListener {
 
-    public static final String TAG = "ABOUT_FRAG";
+    public static final String TAG = AboutFragment.class.getCanonicalName();
 
     private ImageButton nolanInstagram;
     private TextView emailText, changeLogView;

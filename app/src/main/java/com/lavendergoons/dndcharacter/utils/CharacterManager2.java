@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -33,6 +31,8 @@ import io.reactivex.schedulers.Schedulers;
 
 @DataScope
 public class CharacterManager2 {
+
+    public static final String TAG = CharacterManager2.class.getCanonicalName();
 
     private Character2 character2;
     private DBAdapter dbAdapter;

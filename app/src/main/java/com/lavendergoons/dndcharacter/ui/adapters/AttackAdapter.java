@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class AttackAdapter extends RecyclerView.Adapter<AttackAdapter.ViewHolder> {
 
+    public static final String TAG = AttackAdapter.class.getCanonicalName();
+
     private Fragment fragment;
     private AttackAdapterListener listener;
     private ArrayList<Attack> mDataset;

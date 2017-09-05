@@ -18,6 +18,8 @@ import com.lavendergoons.dndcharacter.utils.Utils;
  */
 public class AddCharacterDialog {
 
+    public static final String TAG = AddCharacterDialog.class.getCanonicalName();
+
     public static void showAddCharacterDialog(final Activity activity, final AddCharacterDialog.OnCharacterCompleteListener target) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LinearLayout dialogLayout = new LinearLayout(activity);

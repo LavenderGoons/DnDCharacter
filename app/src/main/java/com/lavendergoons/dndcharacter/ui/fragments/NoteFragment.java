@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class NoteFragment extends BaseFragment {
 
-    public static final String TAG = "NOTE_FRAG";
+    public static final String TAG = NoteFragment.class.getCanonicalName();
 
     private CharacterManager characterManager;
     private EditText titleEdit, contentEdit;

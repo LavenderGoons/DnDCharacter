@@ -14,6 +14,8 @@ import com.lavendergoons.dndcharacter.R;
 
 public class ConfirmationDialog extends DialogFragment {
 
+    public static final String TAG = ConfirmationDialog.class.getCanonicalName();
+
     public ConfirmationDialog() {
         super();
     }

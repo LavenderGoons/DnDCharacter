@@ -37,6 +37,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SkillsFragment extends BaseFragment implements SkillsAdapter.SkillAdapterListener, SkillAdapter2.SkillAdapter2Listener {
 
+    public static final String TAG = SkillsFragment.class.getCanonicalName();
+
     private RecyclerView mSkillsRecyclerView;
     private SkillAdapter2 mSkillRecyclerAdapter;
     private RecyclerView.LayoutManager mSkillRecyclerLayoutManager;
@@ -48,7 +50,6 @@ public class SkillsFragment extends BaseFragment implements SkillsAdapter.SkillA
 
     @Inject CharacterManager2 characterManager;
 
-    public static final String TAG = "SKILLS_FRAG";
     private long characterId = -1;
     private SimpleCharacter simpleCharacter;
     private Abilities abilities;

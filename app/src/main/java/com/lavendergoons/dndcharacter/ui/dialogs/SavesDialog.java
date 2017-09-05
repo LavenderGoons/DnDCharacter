@@ -19,7 +19,7 @@ import com.lavendergoons.dndcharacter.R;
 
 public class SavesDialog {
 
-    public static final String TAG = "SAVES_DIALOG";
+    public static final String TAG = SavesDialog.class.getCanonicalName();
 
     private Activity activity;
     private SavesDialogListener target;

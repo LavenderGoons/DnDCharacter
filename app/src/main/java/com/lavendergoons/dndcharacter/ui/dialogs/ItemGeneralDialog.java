@@ -20,6 +20,7 @@ import static com.lavendergoons.dndcharacter.utils.Utils.checkIntNotNull;
 
 public class ItemGeneralDialog {
 
+    public static final String TAG = ItemGeneralDialog.class.getCanonicalName();
     private Activity activity;
     private Item item;
     private ItemsGeneralDialogListener listener;

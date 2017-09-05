@@ -25,6 +25,8 @@ import java.util.ArrayList;
 
 public class SkillAdapter2 extends RecyclerView.Adapter<SkillAdapter2.ViewHolder> {
 
+    public static final String TAG = SkillAdapter2.class.getCanonicalName();
+
     private Fragment target;
     private ArrayList<Skill> mDataset;
     private Abilities abilities;

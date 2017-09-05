@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class FeatsFragment extends BaseFragment implements
         View.OnClickListener, ConfirmationDialog.ConfirmationDialogInterface, FeatDialog.FeatDialogListener, FeatAdapter.FeatAdapterListener {
 
-    public static final String TAG = "FEATS_FRAG";
+    public static final String TAG = FeatsFragment.class.getCanonicalName();
 
 
     private RecyclerView mFeatsRecyclerView;

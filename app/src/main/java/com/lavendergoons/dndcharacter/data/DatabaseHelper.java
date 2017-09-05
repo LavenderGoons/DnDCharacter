@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String TAG = "DATABASE_ADAPTER";
+    public static final String TAG = DatabaseHelper.class.getCanonicalName();
 
     public static final String TABLE_CHARACTERS = "characters";
     private static final String DATABASE_NAME = "DnD_Characters.db";

@@ -26,7 +26,7 @@ import java.util.Arrays;
 
 public class AttributesAdapter extends RecyclerView.Adapter<AttributesAdapter.ViewHolder> {
 
-    public static final String TAG = "ATTRIBUTES_ADAPTER";
+    public static final String TAG = AttributesAdapter.class.getCanonicalName();
 
     private Fragment fragment;
     private ArrayList<String> mDataset = new ArrayList<>(Arrays.asList(Constants.ATTRIBUTES));

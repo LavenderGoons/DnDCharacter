@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class NotesListFragment extends BaseFragment
         implements ConfirmationDialog.ConfirmationDialogInterface, View.OnClickListener, NotesAdapter.NotesAdapterListener {
 
-    public static final String TAG = "NOTES_LIST_FRAG";
+    public static final String TAG = NotesListFragment.class.getCanonicalName();
 
     private RecyclerView mNotesRecyclerView;
     private NotesAdapter mNotesRecyclerAdapter;

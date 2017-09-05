@@ -23,13 +23,15 @@ import java.util.ArrayList;
  */
 public class SpellFragment extends BaseFragment {
 
-    private EditText spellNameEdit, spellLevelEdit, spellTypeEdit, spellComponentEdit, spellCastTimeEdit, spellRangeEdit, spellAreaEdit, spellDurationEdit, spellSavingThrowEdit, spellNotesEdit;
+    public static final String TAG = SpellFragment.class.getCanonicalName();
+
+    private EditText spellNameEdit, spellLevelEdit, spellTypeEdit, spellComponentEdit, spellCastTimeEdit,
+            spellRangeEdit, spellAreaEdit, spellDurationEdit, spellSavingThrowEdit, spellNotesEdit;
     private Switch spellResSwitch;
     private CharacterManager characterManager;
     private ArrayList<Spell> spellList = new ArrayList<>();
     private Spell spell;
     private int index = -1;
-    public static final String TAG = "SPELL_FRAG";
 
     public SpellFragment() {
         // Required empty public constructor

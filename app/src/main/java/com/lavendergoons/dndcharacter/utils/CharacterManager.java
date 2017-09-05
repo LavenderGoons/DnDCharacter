@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CharacterManager {
 
-    public static final String TAG = "CHAR_MANAGER";
+    public static final String TAG = CharacterManager.class.getCanonicalName();
 
     private static CharacterManager mInstance;
     private ArrayList<SimpleCharacter> simpleCharacters = new ArrayList<>();

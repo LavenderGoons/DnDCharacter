@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class ArmorFragment extends BaseFragment {
 
-    public static final String TAG = "ARMOR_FRAG";
+    public static final String TAG = ArmorFragment.class.getCanonicalName();
 
     private CharacterManager characterManager;
     private ArrayList<Armor> armorList = new ArrayList<>();

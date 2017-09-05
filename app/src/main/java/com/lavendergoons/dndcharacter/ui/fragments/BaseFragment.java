@@ -7,7 +7,7 @@ import com.lavendergoons.dndcharacter.ui.interfaces.FragmentInterface;
 
 public class BaseFragment extends Fragment implements FragmentInterface{
 
-    public static final String TAG = "BASE_FRAG";
+    public static final String TAG = BaseFragment.class.getCanonicalName();
 
     public int getTitle() {
         return R.string.app_name;

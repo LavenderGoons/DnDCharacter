@@ -49,7 +49,7 @@ public class CharacterNavDrawerActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
 
-    public static final String TAG = "CHARACTER_NAV";
+    public static final String TAG = CharacterNavDrawerActivity.class.getCanonicalName();
 
     private boolean toolbarListenerRegister = false;
 

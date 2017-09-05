@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 public class FeatAdapter extends RecyclerView.Adapter<FeatAdapter.ViewHolder> {
 
+    public static final String TAG = FeatAdapter.class.getCanonicalName();
+
     private ArrayList<Feat> mDataset;
     private Context context;
     private Fragment fragment;

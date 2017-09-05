@@ -23,7 +23,7 @@ import java.util.Arrays;
 
 public class ACDialog  {
 
-    public static final String TAG = "AC_DIALOG";
+    public static final String TAG = ACDialog.class.getCanonicalName();
 
     private EditText acArmorEdit, acShieldEdit, acDexEdit, acSizeEdit, acNaturalEdit, acDeflectionEdit, acMiscEdit, acTotalEdit;
     private Activity activity;

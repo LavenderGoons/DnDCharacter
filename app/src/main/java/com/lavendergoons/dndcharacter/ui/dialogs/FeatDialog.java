@@ -19,6 +19,7 @@ import com.lavendergoons.dndcharacter.R;
 
 public class FeatDialog {
 
+    public static final String TAG = FeatDialog.class.getCanonicalName();
     private Context context;
     private FeatDialogListener target;
 
