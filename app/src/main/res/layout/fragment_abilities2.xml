@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/generalCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:focusableInTouchMode="true">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/abilityHpLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/gen_hp"
+                    app:layout_constraintHorizontal_bias="0.529"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityHpEdit"
+                    app:layout_constraintRight_toRightOf="@+id/abilityHpEdit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/abilityNonLethalLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gen_non_lethal_break"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityNonLethalEdit"
+                    app:layout_constraintRight_toRightOf="@+id/abilityNonLethalEdit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/abilityBaseAtkLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gen_base_attack_break"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityBaseAtkEdit"
+                    app:layout_constraintRight_toRightOf="@+id/abilityBaseAtkEdit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/abilitySpellResLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/spell_resistance_break"
+                    app:layout_constraintHorizontal_bias="0.538"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilitySpellResEdit"
+                    app:layout_constraintRight_toRightOf="@+id/abilitySpellResEdit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/abilityInitiativeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/gen_initiative"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityInitiativeEdit"
+                    app:layout_constraintRight_toRightOf="@+id/abilityInitiativeEdit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/abilitySpeedLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/gen_speed"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilitySpeedEdit"
+                    app:layout_constraintRight_toRightOf="@+id/abilitySpeedEdit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Margin TOP increase spacing-->
+                <EditText
+                    android:id="@+id/abilityHpEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:selectAllOnFocus="true"
+                    android:ems="2"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:text="00"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityNonLethalEdit"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityNonLethalLabel" />
+
+                <EditText
+                    android:id="@+id/abilityNonLethalEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:selectAllOnFocus="true"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:text="00"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityHpEdit"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityHpEdit"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityBaseAtkEdit" />
+
+                <EditText
+                    android:id="@+id/abilityBaseAtkEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:selectAllOnFocus="true"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:text="00"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityNonLethalEdit"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityNonLethalEdit"
+                    app:layout_constraintRight_toLeftOf="@+id/abilitySpellResEdit" />
+
+                <EditText
+                    android:id="@+id/abilitySpellResEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:selectAllOnFocus="true"
+                    android:ems="2"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:text="00"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityBaseAtkEdit"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityBaseAtkEdit"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityInitiativeEdit" />
+
+                <EditText
+                    android:id="@+id/abilityInitiativeEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:gravity="center_horizontal"
+                    android:selectAllOnFocus="true"
+                    android:inputType="number"
+                    android:text="00"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilitySpellResEdit"
+                    app:layout_constraintLeft_toRightOf="@+id/abilitySpellResEdit"
+                    app:layout_constraintRight_toLeftOf="@+id/abilitySpeedEdit" />
+
+                <EditText
+                    android:id="@+id/abilitySpeedEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:gravity="center_horizontal"
+                    android:selectAllOnFocus="true"
+                    android:inputType="number"
+                    android:text="00"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityInitiativeEdit"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityInitiativeEdit"
+                    app:layout_constraintRight_toRightOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/grappleCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:focusableInTouchMode="true">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/grappleLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gen_grapple"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="0dp" />
+
+                <TextView
+                    android:id="@+id/grappleBaseAttackLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/gen_base_attack_short"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/grappleLabel"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/grappleStrModLabel" />
+
+                <TextView
+                    android:id="@+id/grappleStrModLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/grapple_str_mod"
+                    app:layout_constraintBottom_toBottomOf="@+id/grappleBaseAttackLabel"
+                    app:layout_constraintLeft_toRightOf="@+id/grappleBaseAttackLabel"
+                    app:layout_constraintRight_toLeftOf="@+id/grappleSizeModLabel" />
+
+                <TextView
+                    android:id="@+id/grappleSizeModLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/grapple_size_mod"
+                    app:layout_constraintLeft_toRightOf="@+id/grappleStrModLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/grappleStrModLabel"
+                    app:layout_constraintRight_toLeftOf="@+id/grappleMiscModLabel" />
+
+                <TextView
+                    android:id="@+id/grappleMiscModLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/grapple_misc_mod"
+                    app:layout_constraintLeft_toRightOf="@+id/grappleSizeModLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/grappleSizeModLabel"
+                    app:layout_constraintRight_toLeftOf="@+id/grappleTotalLabel" />
+
+                <TextView
+                    android:id="@+id/grappleTotalLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/hint_total"
+                    app:layout_constraintLeft_toRightOf="@+id/grappleMiscModLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/grappleMiscModLabel"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+                <!-- Margin TOP increase spacing-->
+                <EditText
+                    android:id="@+id/grappleBaseAttackEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:ems="2"
+                    android:inputType="numberSigned"
+                    android:text="00"
+                    android:selectAllOnFocus="true"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/grappleBaseAttackLabel"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/grappleBaseAttackLabel"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/grappleBaseAttackLabel" />
+
+
+                <EditText
+                    android:id="@+id/grappleStrModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    app:layout_constraintBottom_toBottomOf="@+id/grappleBaseAttackEdit"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/grappleStrModLabel"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/grappleStrModLabel" />
+
+                <EditText
+                    android:id="@+id/grappleSizeModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/grappleSizeModLabel"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/grappleSizeModLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/grappleStrModEdit"
+                    android:layout_marginBottom="0dp" />
+
+                <EditText
+                    android:id="@+id/grappleMiscModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/grappleMiscModLabel"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/grappleMiscModLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/grappleSizeModEdit"
+                    android:layout_marginBottom="0dp" />
+
+                <EditText
+                    android:id="@+id/grappleTotalEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/grappleTotalLabel"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/grappleTotalLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/grappleMiscModEdit"
+                    android:layout_marginBottom="0dp" />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/scoresCard">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/abilityNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/hint_name"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityModStr" />
+
+                <TextView
+                    android:id="@+id/scoreNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gen_score"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityNameLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityStrScoreEdit"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/modNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gen_mod"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/scoreNameLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityStrModEdit"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/abilityModStr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ability_str"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityNameLabel"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityModDex" />
+
+
+                <TextView
+                    android:id="@+id/abilityModDex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ability_dex"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityModStr"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityModCon" />
+
+                <TextView
+                    android:id="@+id/abilityModCon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ability_con"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityModDex"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityModInt" />
+
+                <TextView
+                    android:id="@+id/abilityModInt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ability_int"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityModCon"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityModWis" />
+
+                <TextView
+                    android:id="@+id/abilityModWis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ability_wis"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityModInt"
+                    app:layout_constraintRight_toLeftOf="@+id/abilityModCha" />
+
+                <TextView
+                    android:id="@+id/abilityModCha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ability_cha"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/abilityModWis"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+                <EditText
+                    android:id="@+id/abilityStrScoreEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:text="00"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityModStr"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/abilityModStr"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityModStr" />
+
+                <EditText
+                    android:id="@+id/abilityDexScoreEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityModDex"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityModDex"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/abilityModDex" />
+
+                <EditText
+                    android:id="@+id/abilityConScoreEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityModCon"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityModCon"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/abilityModCon"/>
+
+                <EditText
+                    android:id="@+id/abilityIntScoreEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityModInt"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityModInt"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/abilityModInt"/>
+
+                <EditText
+                    android:id="@+id/abilityWisScoreEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityModWis"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityModWis"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/abilityModWis"/>
+
+                <EditText
+                    android:id="@+id/abilityChaScoreEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityModCha"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityModCha"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/abilityModCha"/>
+
+
+                <EditText
+                    android:id="@+id/abilityStrModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityStrScoreEdit"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityStrScoreEdit" />
+
+                <EditText
+                    android:id="@+id/abilityDexModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:nextFocusForward="@+id/abilityConModEdit"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityStrModEdit"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityDexScoreEdit" />
+
+                <EditText
+                    android:id="@+id/abilityConModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:nextFocusForward="@+id/abilityIntModEdit"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityDexModEdit"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityConScoreEdit" />
+
+                <EditText
+                    android:id="@+id/abilityIntModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:nextFocusForward="@+id/abilityWisModEdit"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityConModEdit"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityIntScoreEdit" />
+
+                <EditText
+                    android:id="@+id/abilityWisModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    android:nextFocusForward="@+id/abilityChaModEdit"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityIntModEdit"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityWisScoreEdit" />
+
+                <EditText
+                    android:id="@+id/abilityChaModEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:text="00"
+                    app:layout_constraintBottom_toBottomOf="@+id/abilityWisModEdit"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityChaScoreEdit" />
+
+                <ImageButton
+                    android:id="@+id/editScoresImgBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_create_white_24dp"
+                    android:background="@null"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/abilityChaModEdit"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="@+id/abilityChaModEdit"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/abilityChaModEdit" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/acSavesCard">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/saveFortLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save_fortitude"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <TextView
+                    android:id="@+id/saveReflexLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/save_reflex"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/saveFortLabel"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <TextView
+                    android:id="@+id/saveWillLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save_will"
+                    android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/saveReflexLabel"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <TextView
+                    android:id="@+id/saveFortValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintLeft_toRightOf="@+id/saveFortLabel"
+                    android:layout_marginLeft="32dp" />
+
+                <TextView
+                    android:id="@+id/saveReflexValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:layout_marginTop="8dp"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/saveFortValue"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/saveFortValue" />
+
+                <TextView
+                    android:id="@+id/saveWillValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/saveReflexValue"
+                    android:layout_marginRight="0dp"
+                    app:layout_constraintRight_toRightOf="@+id/saveReflexValue" />
+
+                <TextView
+                    android:id="@+id/acGenValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textSize="16sp"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/acTouchValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textSize="16sp"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/acGenValue" />
+
+                <TextView
+                    android:id="@+id/acFlatFootValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textSize="16sp"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/acTouchValue" />
+
+                <TextView
+                    android:id="@+id/acGenLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ac_gen"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/acTouchLabel" />
+
+                <TextView
+                    android:id="@+id/acTouchLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ac_touch"
+                    android:layout_marginTop="8dp"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/acGenLabel"
+                    android:layout_marginLeft="0dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/acFlatFootLabel" />
+
+                <TextView
+                    android:id="@+id/acFlatFootLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ac_flat_foot"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toLeftOf="@+id/acFlatFootValue"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginTop="7dp"
+                    app:layout_constraintTop_toBottomOf="@+id/acTouchLabel" />
+
+                <ImageButton
+                    android:id="@+id/savesEditBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_saves_edit"
+                    app:srcCompat="@drawable/ic_create_white_24dp"
+                    android:background="@null"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/saveWillLabel"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="@+id/saveWillValue" />
+
+                <ImageButton
+                    android:id="@+id/acEditBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_ac_edit"
+                    app:srcCompat="@drawable/ic_create_white_24dp"
+                    android:background="@null"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/acFlatFootLabel"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="@+id/acFlatFootLabel"
+                    app:layout_constraintHorizontal_bias="0.494" />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/moneyCard">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gen_platinum"
+                    android:id="@+id/featPlatinumLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/featGoldLabel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gen_gold"
+                    android:id="@+id/featGoldLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintLeft_toRightOf="@+id/featPlatinumLabel"
+                    app:layout_constraintRight_toLeftOf="@+id/featSilverLabel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gen_silver"
+                    android:id="@+id/featSilverLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintLeft_toRightOf="@+id/featGoldLabel"
+                    app:layout_constraintRight_toLeftOf="@+id/featCopperLabel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gen_copper"
+                    android:id="@+id/featCopperLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintLeft_toRightOf="@+id/featSilverLabel"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:ems="2"
+                    android:id="@+id/abilityPlatinumEdit"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/featPlatinumLabel"
+                    app:layout_constraintLeft_toLeftOf="@+id/featPlatinumLabel"
+                    app:layout_constraintRight_toRightOf="@+id/featPlatinumLabel" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:ems="2"
+                    android:id="@+id/abilityGoldEdit"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/featGoldLabel"
+                    app:layout_constraintLeft_toLeftOf="@+id/featGoldLabel"
+                    app:layout_constraintRight_toRightOf="@+id/featGoldLabel" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:id="@+id/abilitySilverEdit"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:layout_marginTop="0dp"
+                    android:ems="2"
+                    app:layout_constraintTop_toBottomOf="@+id/featSilverLabel"
+                    app:layout_constraintLeft_toLeftOf="@+id/featSilverLabel"
+                    app:layout_constraintRight_toRightOf="@+id/featSilverLabel"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:ems="2"
+                    android:id="@+id/abilityCopperEdit"
+                    android:imeOptions="actionNext"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberSigned"
+                    android:selectAllOnFocus="true"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/featCopperLabel"
+                    app:layout_constraintLeft_toLeftOf="@+id/featCopperLabel"
+                    app:layout_constraintRight_toRightOf="@+id/featCopperLabel"/>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>

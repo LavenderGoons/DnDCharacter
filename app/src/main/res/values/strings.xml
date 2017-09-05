@@ -94,9 +94,10 @@
     <string name="gen_duration">Duration</string>
     <string name="gen_grapple">Grapple</string>
     <string name="gen_hp">Hp</string>
-    <string name="gen_non_lethal_n">Non\nLethal</string>
+    <string name="gen_non_lethal_break">Non\nLethal</string>
     <string name="gen_non_lethal">Non Lethal</string>
     <string name="gen_base_attack_short">Base Atk.</string>
+    <string name="gen_base_attack_break">Base\nAtk.</string>
     <string name="gen_base_attack">Base Attack</string>
     <string name="gen_initiative">Initiative</string>
 
@@ -247,8 +248,11 @@
     <!-- Grapple -->
     <string name="grapple_base_attack">Base Atk.</string>
     <string name="grapple_str_mod">STR Mod.</string>
+    <string name="grapple_str_mod_break">STR\nMod.</string>
     <string name="grapple_size_mod">Size Mod</string>
+    <string name="grapple_size_mod_break">Size\nMod</string>
     <string name="grapple_misc_mod">Misc Mod</string>
+    <string name="grapple_misc_mod_break">Misc\nMod</string>
 
     <!-- Saves -->
     <string name="save_fortitude">Fortitude</string>
@@ -301,6 +305,7 @@
     <string name="spell_saving_throw">Saving Throw</string>
     <string name="spell_resistance">Spell Resistance</string>
     <string name="spell_resistance_short">Spell Res.</string>
+    <string name="spell_resistance_break">Spell\nRes.</string>
 
     <!-- DEV STRINGS -->
     <string name="lavender_goons">Lavender Goons</string>
