@@ -31,6 +31,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -52,7 +53,7 @@ public class SkillsFragment extends BaseFragment implements SkillsAdapter.SkillA
 
     private long characterId = -1;
     private SimpleCharacter simpleCharacter;
-    private Abilities abilities;
+    private Abilities abilities = null;
 
     public SkillsFragment() {
         // Required empty public constructor
@@ -75,14 +76,19 @@ public class SkillsFragment extends BaseFragment implements SkillsAdapter.SkillA
             characterId = getArguments().getLong(Constants.CHARACTER_ID);
             simpleCharacter = getArguments().getParcelable(Constants.CHARACTER_KEY);
         }
-        abilities = characterManager.getAbilities(characterId);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        disposable.add(skillsDisposable());
+        disposable.add(abilitiesDisposable());
+    }
+
+    private Disposable skillsDisposable() {
         Observable<String> skillsStringObservable = characterManager.getObservableJson(characterId, DatabaseHelper.COLUMN_SKILL);
-        disposable.add(skillsStringObservable.observeOn(AndroidSchedulers.mainThread())
+        return skillsStringObservable
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<String>() {
                     @Override
                     public void accept(@NonNull String skills) throws Exception {
@@ -107,11 +113,29 @@ public class SkillsFragment extends BaseFragment implements SkillsAdapter.SkillA
                         Log.d(TAG, "accept: Thread "+Thread.currentThread().getName());
                         progressBar.setVisibility(View.GONE);
                         skillsList = skills;
-                        mSkillRecyclerAdapter.setData(skills);
+                        mSkillRecyclerAdapter.setSkills(skills);
                     }
-                }));
+                });
     }
 
+    private Disposable abilitiesDisposable() {
+        Observable<String> abilitiesObservable = characterManager.getObservableJson(characterId, DatabaseHelper.COLUMN_ABILITIES);
+        return abilitiesObservable.subscribeOn(Schedulers.computation())
+                .map(new Function<String, Abilities>() {
+                    @Override
+                    public Abilities apply(@NonNull String json) throws Exception {
+                        Type type = new TypeToken<Abilities>(){}.getType();
+                        return gson.fromJson(json, type);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Abilities>() {
+                    @Override
+                    public void accept(@NonNull Abilities abilities) throws Exception {
+                        mSkillRecyclerAdapter.setAbilities(abilities);
+                    }
+                });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

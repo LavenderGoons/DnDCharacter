@@ -96,25 +96,8 @@ public class CharacterManager2 {
         return dbAdapter.getObservableJson(id, column);
     }
 
-    //TODO Find a better way
-
-    public Abilities getAbilities(long id) {
-        checkCharacter();
-        if (character2.getAbilities() == null) {
-            Type type = new TypeToken<Abilities>(){}.getType();
-            Abilities item = dbAdapter.getObjectColumn(id, DatabaseHelper.COLUMN_ABILITIES, type);
-            character2.setAbilities(item);
-            item = null;
-        }
-        return character2.getAbilities();
-    }
-
     public void setAbilities(long id, Abilities abilities) {
-        if (abilities != null) {
-            character2.setAbilities(abilities);
-            String json = gson.toJson(abilities);
-            writeToDatabase(id, DatabaseHelper.COLUMN_ABILITIES, json);
-        }
+        writeToDatabaseSingle(id, DatabaseHelper.COLUMN_ABILITIES, gson.toJson(abilities));
     }
 
     public ArrayList<Armor> getArmor(long id) {

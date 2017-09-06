@@ -9,11 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.crash.FirebaseCrash;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lavendergoons.dndcharacter.BuildConfig;
 import com.lavendergoons.dndcharacter.DndApplication;
+import com.lavendergoons.dndcharacter.data.DatabaseHelper;
+import com.lavendergoons.dndcharacter.models.Attributes;
+import com.lavendergoons.dndcharacter.models.Skill;
 import com.lavendergoons.dndcharacter.ui.dialogs.ACDialog;
 import com.lavendergoons.dndcharacter.ui.dialogs.SavesDialog;
 import com.lavendergoons.dndcharacter.ui.dialogs.ScoresDialog;
@@ -22,7 +29,10 @@ import com.lavendergoons.dndcharacter.models.SimpleCharacter;
 import com.lavendergoons.dndcharacter.R;
 import com.lavendergoons.dndcharacter.utils.CharacterManager2;
 import com.lavendergoons.dndcharacter.utils.Constants;
+import com.lavendergoons.dndcharacter.utils.Utils;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.inject.Inject;
@@ -31,6 +41,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.lavendergoons.dndcharacter.utils.Utils.checkIntNotNull;
 import static java.lang.Integer.parseInt;
@@ -43,19 +60,22 @@ public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialog
 
     public static final String TAG = AbilitiesFragment.class.getCanonicalName();
 
-    @Inject
-    CharacterManager2 characterManager;
+    @Inject CharacterManager2 characterManager;
 
     // Butterknife view unbinder
     private Unbinder unbinder;
+    private CompositeDisposable disposable = new CompositeDisposable();
+    private Gson gson = new Gson();
 
     private SimpleCharacter simpleCharacter;
     private Abilities abilities;
     private long characterId = -1;
 
-    @BindView(R.id.savesEditBtn) Button savesEditBtn;
-    @BindView(R.id.acEditBtn) Button acEditBtn;
-    @BindView(R.id.scoresEditBtn) Button scoresEditBtn;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+
+    @BindView(R.id.savesEditBtn) ImageButton savesEditBtn;
+    @BindView(R.id.acEditBtn) ImageButton acEditBtn;
+    @BindView(R.id.scoresEditBtn) ImageButton scoresEditBtn;
 
     @BindView(R.id.saveFortValue) TextView saveFortValue;
     @BindView(R.id.saveReflexValue) TextView saveReflexValue;
@@ -116,8 +136,6 @@ public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialog
             simpleCharacter = getArguments().getParcelable(Constants.CHARACTER_KEY);
         }
         DndApplication.get(this).getAppComponent().inject(this);
-        abilities = characterManager.getAbilities(characterId);
-        FirebaseCrash.log("Abilities: "+abilities);
     }
 
     @Override
@@ -134,7 +152,7 @@ public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialog
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_abilities, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_abilities2, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
 
@@ -235,13 +253,74 @@ public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialog
         });
 
         // Set Grapple TextWatchers
-        grappleBaseAttackEdit.addTextChangedListener(new GrappleTextWatcher());
-        grappleStrModEdit.addTextChangedListener(new GrappleTextWatcher());
-        grappleSizeModEdit.addTextChangedListener(new GrappleTextWatcher());
-        grappleMiscModEdit.addTextChangedListener(new GrappleTextWatcher());
+        grappleBaseAttackEdit.addTextChangedListener(
+                new GrappleTextWatcher(grappleStrModEdit, grappleSizeModEdit, grappleMiscModEdit, grappleTotalEdit));
+        grappleStrModEdit.addTextChangedListener(
+                new GrappleTextWatcher(grappleBaseAttackEdit, grappleSizeModEdit, grappleMiscModEdit, grappleTotalEdit));
+        grappleSizeModEdit.addTextChangedListener(
+                new GrappleTextWatcher(grappleBaseAttackEdit, grappleStrModEdit, grappleMiscModEdit, grappleTotalEdit));
+        grappleMiscModEdit.addTextChangedListener(
+                new GrappleTextWatcher(grappleBaseAttackEdit, grappleStrModEdit, grappleSizeModEdit, grappleTotalEdit));
 
-        setValues();
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Observable<String> observable = characterManager.getObservableJson(characterId, DatabaseHelper.COLUMN_ABILITIES);
+        disposable.add(observable.observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<String>() {
+                    @Override
+                    public void accept(@NonNull String s) throws Exception {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                })
+                .observeOn(Schedulers.computation())
+                .map(new Function<String, Abilities>() {
+                    @Override
+                    public Abilities apply(@NonNull String json) throws Exception {
+                        Type type = new TypeToken<Abilities>(){}.getType();
+                        return gson.fromJson(json, type);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Abilities>() {
+                    @Override
+                    public void accept(@NonNull Abilities abilities) throws Exception {
+                        progressBar.setVisibility(View.GONE);
+                        setData(abilities);
+                        setValues();
+                    }
+                }));
+    }
+
+    private void setData(Abilities abilities) {
+        this.abilities = abilities;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposable.clear();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        writeAbilities();
+    }
+
+    private void writeAbilities() {
+        readAbilityGeneralValues();
+        readGrappleValues();
+        readScoreModValues();
+        readMoneyValues();
+        if (abilities != null) {
+            characterManager.setAbilities(characterId, abilities);
+        } else {
+            FirebaseCrash.log(TAG+" Abilities Null writeAbilities");
+        }
     }
 
     @Override
@@ -267,24 +346,6 @@ public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialog
                 new ScoresDialog(this.getActivity(), this, abilities).showDialog();
                 break;
             }
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        writeAbilities();
-    }
-
-    private void writeAbilities() {
-        readAbilityGeneralValues();
-        readGrappleValues();
-        readScoreModValues();
-        readMoneyValues();
-        if (abilities != null) {
-            characterManager.setAbilities(characterId, abilities);
-        } else {
-            FirebaseCrash.log(TAG+" Abilities Null writeAbilities");
         }
     }
 
@@ -587,12 +648,25 @@ public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialog
     //**********************************************************
 
     private class GrappleTextWatcher implements TextWatcher {
+        EditText other, other2, other3, total;
+
+        public GrappleTextWatcher(EditText other, EditText other2, EditText other3, EditText total) {
+            this.other = other;
+            this.other2 = other2;
+            this.other3 = other3;
+            this.total = total;
+        }
+
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            int base=0, str=0, size=0, misc=0;
+            int listenedValue = Utils.stringToInt(charSequence.toString());
+            int value = Utils.checkIntNotNull(other);
+            int value2 = Utils.checkIntNotNull(other2);
+            int value3 = Utils.checkIntNotNull(other3);
+            /*int base=0, str=0, size=0, misc=0;
             try {
                 base = Integer.parseInt(grappleBaseAttackEdit.getText().toString());
                 str = Integer.parseInt(grappleStrModEdit.getText().toString());
@@ -601,8 +675,8 @@ public class AbilitiesFragment extends BaseFragment implements ACDialog.ACDialog
             }catch (Exception ex) {
                 ex.printStackTrace();
                 FirebaseCrash.log(TAG +ex.toString());
-            }
-            grappleTotalEdit.setText(String.valueOf(base + str + size + misc));
+            }*/
+            total.setText(String.valueOf(listenedValue + value + value2 + value3));
         }
 
         @Override

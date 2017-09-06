@@ -144,13 +144,18 @@ public class SkillAdapter2 extends RecyclerView.Adapter<SkillAdapter2.ViewHolder
         return mDataset;
     }
 
-    public void setData(ArrayList<Skill> skills) {
+    public void setSkills(ArrayList<Skill> skills) {
         if (skills.isEmpty()) {
             for (Constants.Skills s : Constants.Skills.values()) {
                 skills.add(new Skill(s.getName(), s.getMod(), s.getDefault()));
             }
         }
         mDataset = skills;
+        notifyDataSetChanged();
+    }
+
+    public void setAbilities(Abilities abilities) {
+        this.abilities = abilities;
         notifyDataSetChanged();
     }
 
